@@ -1,4 +1,5 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
+import { mixins } from "./mixins";
 
 export const GlobalStyle = createGlobalStyle`
     *{
@@ -11,7 +12,12 @@ export const GlobalStyle = createGlobalStyle`
         outline: 0;
     }
     body{
-        background: ${props => props.theme["background"]};
-        
+        background: ${props => props.theme["yellow"]};
+        color: ${props => props.theme["base-title"]};
+        -webkit-font-smoothing: antialiased;
+    }
+
+    body, input-security, textarea, button{
+        font-family: ${mixins.title_xl}
     }
 `
