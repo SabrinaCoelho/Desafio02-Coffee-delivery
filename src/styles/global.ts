@@ -18,6 +18,6 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body, input-security, textarea, button{
-        font-family: ${mixins.title_xl}
+        font-family: ${mixins.text_m_regular}
     }
 `
