@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
-    /* max-width: 74rem; */
-    /* padding: 2rem 0; */
-    background: ${({theme}) => theme.background};
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    //background: ${({theme}) => theme.background};
+    background: deeppink;
 `;
