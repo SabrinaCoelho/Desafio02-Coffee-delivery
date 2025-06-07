@@ -1,6 +1,7 @@
 import { CityLocation, HeaderContainer } from "./styles";
 import logo from "../../assets/Logo.svg";
-import { MapPinIcon } from "@phosphor-icons/react";
+import { MapPinIcon, ShoppingCartIcon } from "@phosphor-icons/react";
+import { Cart } from "../Cart";
 
 export function Header (){
     return(
@@ -8,10 +9,15 @@ export function Header (){
             <span>
                 <img src={logo} alt="Coffee Delivery logo"/>
             </span>
-            <CityLocation>
-                <MapPinIcon size={22} weight="fill" />
-                Porto Alegre, RS
-            </CityLocation>
+            <div>
+                <CityLocation>
+                    <MapPinIcon size={22} weight="fill" />
+                    Porto Alegre, RS
+                </CityLocation>
+                <Cart>
+                    <ShoppingCartIcon size={22} weight="fill" />
+                </Cart>
+            </div>
         </HeaderContainer>
     );
 }

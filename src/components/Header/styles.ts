@@ -3,15 +3,21 @@ import { mixins } from "../../styles/mixins";
 
 export const HeaderContainer = styled.header`
     background: ${props => props.theme.background};
-    max-width: 74rem;
+    max-width: 70rem;
     display: flex;
     align-items: center;
-    width: 100%;
+
     justify-content: space-between;
-    padding: 2rem 10rem;
+    padding: 2rem 0.5rem;
+
+    margin: auto;
     span{
         display: block;
     }
+    div{
+        display: flex;
+    }
+    
 `;
 
 export const CityLocation = styled.div`
@@ -21,5 +27,7 @@ export const CityLocation = styled.div`
     display: flex;
     align-items: center;
     ${mixins.text_s};
-    color: ${({theme}) => theme["purple-dark"]}
+    color: ${({theme}) => theme["purple-dark"]};
+    gap: .25rem;
+    margin-right: 0.75rem;
 `;
