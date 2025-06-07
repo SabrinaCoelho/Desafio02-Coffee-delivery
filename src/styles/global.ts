@@ -20,4 +20,12 @@ export const GlobalStyle = createGlobalStyle`
     body, input-security, textarea, button{
         font-family: ${mixins.text_m_regular}
     }
+    @media(max-width: 768px){
+        html{
+            font-size: 87.5%;
+        }
+        body{
+            background: yellow;
+        }
+    }
 `
