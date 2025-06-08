@@ -26,7 +26,7 @@ export const CityLocation = styled.div`
     background: ${({theme}) => theme["purple-light"]};
     display: flex;
     align-items: center;
-    ${mixins.text_s};
+    ${mixins.text_s}
     color: ${({theme}) => theme["purple-dark"]};
     gap: .25rem;
     margin-right: 0.75rem;
