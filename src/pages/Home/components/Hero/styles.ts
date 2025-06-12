@@ -55,20 +55,6 @@ export const TitleHeroContainer = styled.div`
     gap: 1rem;
 
     grid-area: a;
-`;
-
-export const Title = styled.h1`
-    ${mixins.title_xl}
-    color: ${({theme}) => theme["base-title"]};
-
-    @media (max-width: 768px){
-        text-align: center;
-    }
-`;
-
-export const Subtitle = styled.h2`
-    ${mixins.text_l_regular}
-    color: ${({theme}) => theme["base-subtitle"]};
 
     @media (max-width: 768px){
         text-align: center;
@@ -97,7 +83,7 @@ export const AdvantageItem = styled.p`
     gap: .75rem;
 `;
 
-export const AdvantageItemIcon = styled.div<AdvantageItemIconProp>`
+export const AdvantageItemIcon = styled.span<AdvantageItemIconProp>`
     background: ${(props) => props.theme[props.varaint]};
     border-radius: 1000px;
     padding: .5rem;

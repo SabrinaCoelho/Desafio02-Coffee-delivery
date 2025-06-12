@@ -1,18 +1,19 @@
 import { CoffeeIcon, PackageIcon, ShoppingCartIcon, TimerIcon } from "@phosphor-icons/react";
-import { AdvantageItem, AdvantageItemIcon, AdvantagesContainer, HeroContainer, ImageHeroContainer, Subtitle, TextHeroContainer, Title, TitleHeroContainer } from "./styles";
+import { AdvantageItem, AdvantageItemIcon, AdvantagesContainer, HeroContainer, ImageHeroContainer, TextHeroContainer, TitleHeroContainer } from "./styles";
 import Caffee_delivey_drink from "../../../../assets/Coffe-delivery-drink.png";
+import { TitleXL, TextL_Regular } from "../Typography/styles";
 
 export function Hero(){
     return(
         <HeroContainer>
             <TextHeroContainer>
                 <TitleHeroContainer>
-                    <Title>
+                    <TitleXL>
                         Encontre o café perfeito para qualquer hora do dia
-                    </Title>
-                    <Subtitle>
+                    </TitleXL>
+                    <TextL_Regular>
                         Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora
-                    </Subtitle>
+                    </TextL_Regular>
                 </TitleHeroContainer>
                 <AdvantagesContainer>
                     <AdvantageItem>
