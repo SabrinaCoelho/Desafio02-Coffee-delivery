@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { mixins } from "../../../../../styles/mixins";
 
 export const CatatalogItemContainer = styled.div`
     width: 16rem;
@@ -15,4 +16,20 @@ export const Tag = styled.span`
     color: ${({theme}) => theme["yellow-dark"]};
     text-transform: capitalize;
     border-radius: 100px;
+`;
+
+export const SelectItemContainer = styled.div`
+    display: flex;
+    gap: ".5rem";
+    align-items: center;
+`;
+
+export const ItemPriceContainer = styled.span`
+    ${mixins.text_s}
+    color: ${props => props.theme["base-text"]};
+`;
+
+export const ItemPrice = styled.span`
+    ${mixins.title_m}
+    color: ${props => props.theme["base-text"]};
 `;

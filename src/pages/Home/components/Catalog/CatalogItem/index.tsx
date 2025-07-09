@@ -1,5 +1,8 @@
+import { ShoppingCartIcon } from "@phosphor-icons/react";
+import { IconButton } from "../../../../../components/Button/style";
+import { InputNumber } from "../../../../../components/InputNumber";
 import { TextL_Bold, TextS_Regular, TextTag } from "../../Typography/styles";
-import { CatatalogItemContainer, Tag } from "./styles";
+import { CatatalogItemContainer, ItemPrice, ItemPriceContainer, SelectItemContainer, Tag } from "./styles";
 
 export function CatalogItem(){
     return(
@@ -13,6 +16,18 @@ export function CatalogItem(){
             <TextS_Regular>
                 O tradicional café feito com água quente e grãos moídos
             </TextS_Regular>
+            <SelectItemContainer>
+                <ItemPriceContainer>
+                    R$
+                    <ItemPrice>9,90</ItemPrice>
+                </ItemPriceContainer>
+                <div style={{display: "flex", gap: ".5rem"}}>
+                    <InputNumber />
+                    <IconButton>
+                        <ShoppingCartIcon size={22} weight="fill" />
+                    </IconButton>
+                </div>
+            </SelectItemContainer>
         </CatatalogItemContainer>
     );
 }
