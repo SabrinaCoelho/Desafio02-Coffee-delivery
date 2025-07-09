@@ -19,8 +19,10 @@ export const Tag = styled.span`
 `;
 
 export const SelectItemContainer = styled.div`
+    width: 100%;
     display: flex;
-    gap: ".5rem";
+    justify-content: space-between;
+    gap: .5rem;
     align-items: center;
 `;
 
