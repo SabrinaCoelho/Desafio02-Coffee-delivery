@@ -8,6 +8,9 @@ export const CatatalogItemContainer = styled.div`
     border-radius: 6px 36px 6px 36px;
     padding: 1.25rem;
     text-align: center;
+
+    display: flex;
+    flex-direction: column-reverse;
 `;
 
 export const Tag = styled.span`
@@ -16,6 +19,15 @@ export const Tag = styled.span`
     color: ${({theme}) => theme["yellow-dark"]};
     text-transform: capitalize;
     border-radius: 100px;
+`;
+
+export const TagsContainer = styled.div`
+margin-top: .75rem;
+`;
+
+export const ItemInfosContainer = styled.div`
+    margin-top: 1rem;
+    margin-bottom: 2.0625rem;
 `;
 
 export const SelectItemContainer = styled.div`
