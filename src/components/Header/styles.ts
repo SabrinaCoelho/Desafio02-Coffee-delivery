@@ -3,7 +3,7 @@ import { mixins } from "../../styles/mixins";
 
 export const HeaderContainer = styled.header`
     background: ${props => props.theme.background};
-    max-width: 70rem;
+    // max-width: 70rem;
     display: flex;
     align-items: center;
 
