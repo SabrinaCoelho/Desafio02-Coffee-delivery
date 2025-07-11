@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
-    //background: ${({theme}) => theme.background};
-    background: deeppink;
+    background: ${({theme}) => theme.background};
+    max-width: 70rem;
+    margin: auto;
+    //background: deeppink;
 `;
