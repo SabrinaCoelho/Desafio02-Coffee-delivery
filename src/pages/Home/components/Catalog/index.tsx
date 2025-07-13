@@ -1,22 +1,19 @@
 import { TitleL } from "../Typography/styles";
-import { CatalogItem } from "./CatalogItem";
 import { CatalogContainer, CatalogOptionsContainer } from "./styles";
-import img_test from "../../../../assets/coffee_types/expresso.png";
+import {coffee_catalog} from "../../../../../data.json";
+import {CatalogItem, type Coffee} from "../Catalog/CatalogItem/index";
 
 export function Catalog(){
+    console.log(coffee_catalog);
     return(
         <CatalogContainer>
             <TitleL>
                 Nossos cafés
             </TitleL>
             <CatalogOptionsContainer>
-                <CatalogItem 
-                description="Uma dose de café expresso com o dobro de leite e espuma cremosa"
-                name="Latte"
-                tags={["Tradicional", "com leite"]}
-                price="9,90"
-                img={img_test}
-            />
+                {
+                    coffee_catalog.map((coffee: Coffee) => (<CatalogItem key={coffee.id} item={coffee}/>))
+                }
             </CatalogOptionsContainer>
         </CatalogContainer>
     );
