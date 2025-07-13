@@ -4,7 +4,8 @@ import { InputNumber } from "../../../../../components/InputNumber";
 import { TextL_Bold, TextS_Regular, TextTag } from "../../Typography/styles";
 import { CatatalogItemContainer, ItemInfosContainer, ItemPrice, ItemPriceContainer, SelectItemContainer, Tag, TagsContainer } from "./styles";
 
-interface CatalogItemProps{
+export interface Coffee{
+    id: string;
     tags: string[];
     name: string;
     description: string;
@@ -12,15 +13,19 @@ interface CatalogItemProps{
     img: string;
 }
 
-export function CatalogItem(props: CatalogItemProps){
-    console.log(props);
+type CatalogItemProps = {
+    item: Coffee
+}
+
+export function CatalogItem({item}: CatalogItemProps){
+    console.log(item);
     return(
         <CatatalogItemContainer>
 
             <SelectItemContainer>
                 <ItemPriceContainer>
                     R$
-                    <ItemPrice>{props.price}</ItemPrice>
+                    <ItemPrice>{item.price}</ItemPrice>
                 </ItemPriceContainer>
                 <div style={{display: "flex", gap: ".5rem"}}>
                     <InputNumber />
@@ -32,16 +37,16 @@ export function CatalogItem(props: CatalogItemProps){
 
             <ItemInfosContainer>
                 <TextL_Bold>
-                    {props.name}
+                    {item.name}
                 </TextL_Bold>
                 <TextS_Regular>
-                    {props.description}
+                    {item.description}
                 </TextS_Regular>
             </ItemInfosContainer>
             
             <TagsContainer>
                 {
-                    props.tags.map((tag: any) => (
+                    item.tags.map((tag: string) => (
                         <Tag>
                             <TextTag>{tag}</TextTag>
                         </Tag>
@@ -50,7 +55,7 @@ export function CatalogItem(props: CatalogItemProps){
             </TagsContainer>
 
             <span>
-                <img src={props.img} alt="" style={{width: "120px"}}/>
+                <img src={item.img} alt="" style={{width: "120px"}}/>
             </span>
 
         </CatatalogItemContainer>
