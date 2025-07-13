@@ -17,12 +17,15 @@ export const Tag = styled.span`
     padding: .25rem .5rem;
     background: ${({theme}) => theme["yellow-light"]};
     color: ${({theme}) => theme["yellow-dark"]};
-    text-transform: capitalize;
+    text-transform: uppercase;
     border-radius: 100px;
 `;
 
 export const TagsContainer = styled.div`
-margin-top: .75rem;
+    margin-top: .75rem;
+    display: flex;
+    justify-content: center;
+    gap: .25rem;
 `;
 
 export const ItemInfosContainer = styled.div`
