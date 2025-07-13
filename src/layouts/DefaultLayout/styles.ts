@@ -5,4 +5,8 @@ export const LayoutContainer = styled.div`
     max-width: 70rem;
     margin: auto;
     //background: deeppink;
+
+    @media(max-width: 70rem){
+        padding: 0 1rem;
+    }
 `;
