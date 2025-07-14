@@ -1,14 +1,12 @@
 import { Header } from "../../components/Header";
 import { LayoutContainer } from "./styles";
-import { Catalog } from "../../pages/Home/components/Catalog";
-import { Hero } from "../../pages/Home/components/Hero";
+import { Outlet } from "react-router-dom";
 
 export function DefaultLayout(){
     return(
         <LayoutContainer>
             <Header/>
-            <Hero />
-            <Catalog />
+            <Outlet />
         </LayoutContainer>
     );
 }
