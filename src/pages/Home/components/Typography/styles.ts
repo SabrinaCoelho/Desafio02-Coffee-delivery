@@ -11,6 +11,11 @@ export const TitleL = styled.h1`
     color: ${({theme}) => theme["base-title"]};
 `;
 
+export const TitleXS = styled.h1`
+    ${mixins.title_xs};
+    color: ${({theme}) => theme["base-subtitle"]};
+`;
+
 export const TextL_Regular = styled.p`
     ${mixins.text_l_regular}
     color: ${({theme}) => theme["base-subtitle"]};
@@ -21,6 +26,10 @@ export const TextL_Bold = styled.p`
     color: ${({theme}) => theme["base-subtitle"]};
 `;
 
+export const TextM_Regular = styled.p`
+    ${mixins.text_m_regular}
+    color: ${props => props.theme["base-subtitle"]};
+`;
 export const TextS_Regular = styled.p`
     ${mixins.text_s}
     color: ${({theme}) => theme["base-label"]};
