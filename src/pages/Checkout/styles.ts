@@ -32,6 +32,14 @@ export const AdressLabel = styled.div`
         color: ${props => props.theme["yellow-dark"]};
     }
 `;
+export const PaymentLabel = styled.div`
+    display: flex;
+    gap: .5rem;
+
+    &:first-child{
+        color: ${props => props.theme["purple"]};
+    }
+`;
 
 export const PaymentContainer = styled(BaseShippmentContainer)`
 
