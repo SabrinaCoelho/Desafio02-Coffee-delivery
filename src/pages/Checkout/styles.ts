@@ -6,23 +6,34 @@ export const CheckoutContainer = styled.div`
 `;
 
 export const ShippmentContainer = styled.div`
-    max-width: 40rem;
+    display: flex;
+    flex-direction: column;
+    width: 40rem;
+    gap: .9375rem;
 `;
 
-export const AdressContainer = styled.div`
-    /* background: red; */
+export const BaseShippmentContainer = styled.div`
+    padding: 2.5rem;
+    background: ${props => props.theme["base-card"]};
+    width: 100%;
+    border-radius: 6px;
+`;
+export const AdressContainer = styled(BaseShippmentContainer)`
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 `;
 
 export const AdressLabel = styled.div`
     display: flex;
-    background: pink;
+    gap: .5rem;
 
     &:first-child{
-        color: orange;
+        color: ${props => props.theme["yellow-dark"]};
     }
 `;
 
-export const PaymentContainer = styled.div`
+export const PaymentContainer = styled(BaseShippmentContainer)`
 
 `;
 

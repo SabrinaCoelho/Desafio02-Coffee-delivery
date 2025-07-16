@@ -1,15 +1,18 @@
 import styled from "styled-components";
 import { mixins } from "../../styles/mixins";
 
-// interface InputText {}
-export const InputTextContainer = styled.span`
+interface InputTextProps {
+    width: string;
+}
+export const InputTextContainer = styled.span<InputTextProps>`
     padding: .75rem;
     ${mixins.text_s}
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    ${props => props.width === "full" ? "width: 100%" : "min-width: "+props.width};/* IMPROVE */
     background: ${props => props.theme["base-input"]};
     font-style: italic;
+    font-size: .75rem;
     border-radius: 4px;
     color: ${props => props.theme["base-label"]};
 

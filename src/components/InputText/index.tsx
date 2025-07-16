@@ -1,15 +1,16 @@
 import { InputTextContainer, Text } from "./styles";
+import type { InputHTMLAttributes } from "react";
 
-interface InputTextProps{
-    placeholder: string;
-    /* opcional: boolean; */
+interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
+    optional?: boolean;
+    width?: "full" | "12.5rem";
 }
 
-export function InputText(props: InputTextProps) {
+export function InputText({optional = false, width = "full", ...props}: InputTextProps) {
     return(
-        <InputTextContainer>
-            <Text type="text" placeholder={props.placeholder}/>
-            Opcional
+        <InputTextContainer width={width}>
+            <Text type="text" placeholder={props.placeholder} {...props}/>
+            {optional && (<span>Opcional</span>)}
         </InputTextContainer>
     );
 }
