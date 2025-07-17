@@ -7,7 +7,7 @@ export function PaymentMode(){
             <Mode>
                 <input type="checkbox" />
                 <CreditCardIcon size={16} />
-                Cartão de crédito
+                Cartão  de crédito
             </Mode>
         </PaymentModeContainer>
     );

@@ -42,7 +42,9 @@ export const PaymentLabel = styled.div`
 `;
 
 export const PaymentContainer = styled(BaseShippmentContainer)`
-
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 `;
 
 export const SelectedItemstContainer = styled.div`

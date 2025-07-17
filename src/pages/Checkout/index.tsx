@@ -1,4 +1,4 @@
-import { CurrencyDollar, CurrencyDollarIcon, MapPinAreaIcon, MoneyIcon } from "@phosphor-icons/react";
+import { CurrencyDollarIcon, MapPinAreaIcon, MoneyIcon } from "@phosphor-icons/react";
 import {  TextM_Regular, TextS_Regular, TitleXS } from "../Home/components/Typography/styles";
 import { AdressContainer, AdressLabel, CheckoutContainer, PaymentContainer, PaymentLabel, SelectedItemstContainer, ShippmentContainer } from "./styles";
 import { AdressForm } from "./components/AdressForm";
