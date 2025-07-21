@@ -3,12 +3,13 @@ import styled from "styled-components";
 export const CheckoutContainer = styled.div`
     background: ${props => props.theme["background"]};
     display: flex;
+    gap: 2rem;
 `;
 
 export const ShippmentContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 40rem;
+    max-width: 40rem;
     gap: .9375rem;
 `;
 
@@ -48,5 +49,8 @@ export const PaymentContainer = styled(BaseShippmentContainer)`
 `;
 
 export const SelectedItemstContainer = styled.div`
-
+    padding: 2.5rem;
+    border-radius: 6px 44px 6px 44px;
+    background: ${props => props.theme["base-card"]};
+    
 `;

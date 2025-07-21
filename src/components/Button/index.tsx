@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+/* import type { ReactNode } from "react";
 import { ButtonContainer, type ButtonVariant } from "./style";
 
 interface ButtonProps{
@@ -12,4 +12,4 @@ export function Button({variant = "primary", children}: ButtonProps){
             {children}
         </ButtonContainer>
     );
-}
+} */

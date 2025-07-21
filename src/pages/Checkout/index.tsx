@@ -1,8 +1,9 @@
-import { CurrencyDollarIcon, MapPinAreaIcon, MoneyIcon } from "@phosphor-icons/react";
+import { CurrencyDollarIcon, MapPinAreaIcon } from "@phosphor-icons/react";
 import {  TextM_Regular, TextS_Regular, TitleXS } from "../Home/components/Typography/styles";
 import { AdressContainer, AdressLabel, CheckoutContainer, PaymentContainer, PaymentLabel, SelectedItemstContainer, ShippmentContainer } from "./styles";
 import { AdressForm } from "./components/AdressForm";
 import { PaymentMode } from "./components/PaymentMode";
+import { PrimaryButton } from "../../components/Button/style";
 
 export function Checkout(){
     return (
@@ -30,11 +31,11 @@ export function Checkout(){
                     <PaymentMode />
                 </PaymentContainer>
             </ShippmentContainer>
-
-
-
             <SelectedItemstContainer>
                 <TitleXS>Cafés selecionados</TitleXS>
+                <PrimaryButton>
+                    Confirmar pedido
+                </PrimaryButton>
             </SelectedItemstContainer>
         </CheckoutContainer>
     );
