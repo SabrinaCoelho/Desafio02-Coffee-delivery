@@ -4,6 +4,7 @@ import { AdressContainer, AdressLabel, CheckoutContainer, PaymentContainer, Paym
 import { AdressForm } from "./components/AdressForm";
 import { PaymentMode } from "./components/PaymentMode";
 import { PrimaryButton } from "../../components/Button/style";
+import { CartItem } from "./components/CartItem";
 
 export function Checkout(){
     return (
@@ -33,6 +34,7 @@ export function Checkout(){
             </ShippmentContainer>
             <SelectedItemstContainer>
                 <TitleXS>Cafés selecionados</TitleXS>
+                <CartItem />
                 <PrimaryButton>
                     Confirmar pedido
                 </PrimaryButton>

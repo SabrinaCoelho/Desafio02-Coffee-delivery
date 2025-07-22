@@ -21,17 +21,22 @@ export const PrimaryButton = styled(BaseButton)`
 `;
 
 export const SecondaryButton = styled(BaseButton)`
-    ${mixins.button_m};
+    ${mixins.button_s};
     text-transform: uppercase;
     display: flex;
-    align-items: "center";
+    align-items: center;
     gap: .0938rem;
     padding: .5rem;
     width: fit-content;
+    background: ${props => props.theme["base-button"]};
     color: ${props => props.theme["base-text"]};
+    cursor: pointer;
 
     &:hover{
         background: ${props => props.theme["base-hover"]};
+    }
+    &:first-child{
+        color: ${props => props.theme["purple"]};
     }
 `;
 
