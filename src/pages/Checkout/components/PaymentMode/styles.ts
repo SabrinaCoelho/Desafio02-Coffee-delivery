@@ -24,4 +24,7 @@ export const Mode = styled.span`
     & input{
         display: none;
     }
+    & input:checked{
+        background: ${props => props.theme["purple-light"]};
+    }
 `;

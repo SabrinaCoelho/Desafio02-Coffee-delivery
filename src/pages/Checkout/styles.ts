@@ -54,3 +54,9 @@ export const SelectedItemstContainer = styled.div`
     background: ${props => props.theme["base-card"]};
     
 `;
+
+export const PurchaseInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: .9375rem;
+`;
