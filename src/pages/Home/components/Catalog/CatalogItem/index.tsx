@@ -5,7 +5,7 @@ import { TextL_Bold, TextS_Regular, TextTag } from "../../Typography/styles";
 import { CatatalogItemContainer, ItemInfosContainer, ItemPrice, ItemPriceContainer, SelectItemContainer, Tag, TagsContainer } from "./styles";
 
 export interface Coffee{
-    id: string;
+    id: number;
     tags: string[];
     name: string;
     description: string;
