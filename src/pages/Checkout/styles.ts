@@ -4,6 +4,7 @@ export const CheckoutContainer = styled.div`
     background: ${props => props.theme["background"]};
     display: flex;
     gap: 2rem;
+    margin-bottom: 15rem;
 `;
 
 export const ShippmentContainer = styled.div`
