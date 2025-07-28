@@ -14,6 +14,7 @@ export const InputTextContainer = styled.span<InputTextProps>`
     font-style: italic;
     font-size: .75rem;
     border-radius: 4px;
+    border: 1px solid ${props => props.theme["base-button"]};
     color: ${props => props.theme["base-label"]};
 
     &:focus-within{
