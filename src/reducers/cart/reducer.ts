@@ -3,14 +3,14 @@ import type { CartItem, Delivery, Payment } from "../../contexts/CartContext";
 
 interface Cart{
     items: CartItem[];
-    delivery: Delivery;
     payment: Payment;
+    delivery: Delivery;
     total: number;
 }
 
 interface CartState{
     order: Cart;
-    effective: boolean;
+    effective: boolean | null;
 }
 
 export function CartReducer(state: CartState, action: any){
@@ -48,5 +48,7 @@ export function CartReducer(state: CartState, action: any){
             return produce(state, draft => {
                 draft.order.payment = action.payload.paymentMode
             })
+        default:
+            return state;
     }
 }

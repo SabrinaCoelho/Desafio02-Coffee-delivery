@@ -2,6 +2,7 @@ import { createContext, useReducer, type ReactNode } from "react";
 import { CartItem } from "../pages/Checkout/components/CartItem";
 import { CartReducer } from "../reducers/cart/reducer";
 import { addCartItemAction } from "../reducers/cart/actions";
+import data from "../../data.json";
 
 export interface CartItem{
     id: number;
@@ -46,13 +47,16 @@ export function CartContextProvider({children}: CartContextProviderProps){
     const [cartState, dispatch] = useReducer(
         CartReducer,
         {
-            order: CartItem[],
-            effective: boolean
+            order: {},
+            effective: null
         },
-        (initial) => {
-            return []
+        (initialArgs) => {
+            const dataParsed = JSON.stringify(data)
+            return JSON.parse(dataParsed);
         }
     );
+
+    const {order, effective} = cartState;
 
     function addItem(data: CartItem){
         const item: CartItem = {
@@ -67,7 +71,7 @@ export function CartContextProvider({children}: CartContextProviderProps){
         <CartContext.Provider value={
             {   
                 order,
-                effectiveCart,
+                effective,
                 payment,
                 delivery,
                 setAsEffective,
