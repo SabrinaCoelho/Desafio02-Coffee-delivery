@@ -1,6 +1,6 @@
 import { createContext, useReducer, type ReactNode } from "react";
 import { CartItem } from "../pages/Checkout/components/CartItem";
-import { CartReducer } from "../reducers/cart/reducer";
+import { CartReducer, type Cart } from "../reducers/cart/reducer";
 import { addCartItemAction } from "../reducers/cart/actions";
 import data from "../../data.json";
 
@@ -23,18 +23,17 @@ export interface Delivery{
 }
 
 export interface Payment{//add enum?
-    mode: string
+    mode: string//to do
 }
 
 interface CartContextType{
-    order: CartItem[];
-    effectiveCart: boolean;
-    payment: Payment;
-    delivery: Delivery;
-    setAsEffective: () => void;
+    order: Cart | null;
+    effective: boolean;
+    addItem: (data: CartItem) => void;
+    /* setAsEffective: () => void;
     createNewOrder: (data: CartItem) => void;
     setPaymentMode: (data: Payment) => void;
-    setDeliveryData: (data: Delivery) => void;
+    setDeliveryData: (data: Delivery) => void; */
 }
 
 export const CartContext = createContext({} as CartContextType);
@@ -52,7 +51,10 @@ export function CartContextProvider({children}: CartContextProviderProps){
         },
         (initialArgs) => {
             const dataParsed = JSON.stringify(data)
-            return JSON.parse(dataParsed);
+            if(dataParsed){
+                return JSON.parse(dataParsed);
+            }
+            return initialArgs;
         }
     );
 
@@ -72,12 +74,7 @@ export function CartContextProvider({children}: CartContextProviderProps){
             {   
                 order,
                 effective,
-                payment,
-                delivery,
-                setAsEffective,
-                createNewOrder,
-                setPaymentMode,
-                setDeliveryData
+                addItem
             }} >
                 {children}
         </CartContext.Provider>

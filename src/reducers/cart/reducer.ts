@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import type { CartItem, Delivery, Payment } from "../../contexts/CartContext";
 
-interface Cart{
+export interface Cart{
     items: CartItem[];
     payment: Payment;
     delivery: Delivery;
@@ -10,7 +10,7 @@ interface Cart{
 
 interface CartState{
     order: Cart;
-    effective: boolean | null;
+    effective: boolean;
 }
 
 export function CartReducer(state: CartState, action: any){
