@@ -1,7 +1,7 @@
 import { createContext, useReducer, type ReactNode } from "react";
 import { CartItem } from "../pages/Checkout/components/CartItem";
 import { CartReducer, type Cart } from "../reducers/cart/reducer";
-import { addCartItemAction } from "../reducers/cart/actions";
+import { addCartItemAction, updateItemUnitAction } from "../reducers/cart/actions";
 import data from "../../data.json";
 
 export interface CartItem{
@@ -30,6 +30,7 @@ interface CartContextType{
     order: Cart | null;
     effective: boolean;
     addItem: (data: CartItem) => void;
+    changeItemUnit: (data: CartItem) => void;
     /* setAsEffective: () => void;
     createNewOrder: (data: CartItem) => void;
     setPaymentMode: (data: Payment) => void;
@@ -46,27 +47,37 @@ export function CartContextProvider({children}: CartContextProviderProps){
     const [cartState, dispatch] = useReducer(
         CartReducer,
         {
-            order: {},
+            order: {
+                items: []
+            },
             effective: null
-        },
-        (initialArgs) => {
-            const dataParsed = JSON.stringify(data)
-            if(dataParsed){
-                return JSON.parse(dataParsed);
-            }
-            return initialArgs;
         }
     );
 
     const {order, effective} = cartState;
 
-    function addItem(data: CartItem){
+    function addItem(newItem: CartItem){
         const item: CartItem = {
-            id: data.id,
-            quantity: data.quantity
+            id: newItem.id,
+            quantity: newItem.quantity
         }
 
         dispatch(addCartItemAction(item));
+    }
+
+    function changeItemUnit(itemUnit: CartItem){
+        //does the item already exists in the bascket?
+        console.log(itemUnit)
+        const itemToUpdate = order.items.find(item => {
+            return item.id === itemUnit.id
+        });
+        //yes?
+        if(itemToUpdate){//melhorar
+            //update to the new quantity
+            dispatch(updateItemUnitAction(itemToUpdate));
+        }
+        //no? Add to the bascket
+        addItem(itemUnit);
     }
 
     return(
@@ -74,6 +85,7 @@ export function CartContextProvider({children}: CartContextProviderProps){
             {   
                 order,
                 effective,
+                changeItemUnit,
                 addItem
             }} >
                 {children}

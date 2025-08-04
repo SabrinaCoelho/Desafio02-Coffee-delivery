@@ -3,6 +3,8 @@ import { IconButton } from "../../../../../components/Button/style";
 import { InputNumber } from "../../../../../components/InputNumber";
 import { TextL_Bold, TextS_Regular, TextTag } from "../../Typography/styles";
 import { CatatalogItemContainer, ItemInfosContainer, ItemPrice, ItemPriceContainer, SelectItemContainer, Tag, TagsContainer } from "./styles";
+import { useContext } from "react";
+import { CartContext } from "../../../../../contexts/CartContext";
 
 export interface Coffee{
     id: number;
@@ -18,7 +20,13 @@ type CatalogItemProps = {
 }
 
 export function CatalogItem({item}: CatalogItemProps){
+    
+    const {
+        order
+    } = useContext(CartContext);
+
     console.log(item);
+    console.log(order);
     return(
         <CatatalogItemContainer>
 
@@ -28,7 +36,7 @@ export function CatalogItem({item}: CatalogItemProps){
                     <ItemPrice>{item.price}</ItemPrice>
                 </ItemPriceContainer>
                 <div style={{display: "flex", gap: ".5rem"}}>
-                    <InputNumber />
+                    <InputNumber coffeId={item.id}/>
                     <IconButton>
                         <ShoppingCartIcon size={22} weight="fill" />
                     </IconButton>

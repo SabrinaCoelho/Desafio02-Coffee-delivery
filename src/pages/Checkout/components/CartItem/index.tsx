@@ -18,7 +18,7 @@ export function CartItem(){
                             Expresso Tradicional
                         </CartItemTitle>
                         <CartItemButtons>
-                            <InputNumber />
+                            {/* <InputNumber/> */}
                             <SecondaryButton>
                                 <TrashIcon size={16} />
                                 Remover

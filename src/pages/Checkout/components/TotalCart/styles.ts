@@ -8,7 +8,7 @@ export const TotalCartContainer = styled.div`
 `;
 export const TotalCartDetail = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-items: space-between;
 `;
 export const Separator = styled.hr`
     margin: 1.5rem 0;

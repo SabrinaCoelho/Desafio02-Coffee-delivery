@@ -4,6 +4,7 @@ export enum ActionTypes{
     ADD_ITEM = "ADD_ITEM",
     INCREASE_ITEM = "INCREASE_ITEM",
     DECREASE_ITEM = "DECREASE_ITEM",
+    CHANGE_ITEM_UNIT = "CHANGE_ITEM_UNIT",
     ADD_DELIVERY_DATA = "ADD_DELIVERY_DATA",
     ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE"
 }
@@ -31,6 +32,15 @@ export function deacreaseItemAction(id: CartItem["id"]){
         type: ActionTypes.INCREASE_ITEM,
         payload: {
             id
+        }
+    }
+}
+
+export function updateItemUnitAction(item: CartItem){
+    return{
+        type: ActionTypes.CHANGE_ITEM_UNIT,
+        payload: {
+            item
         }
     }
 }
