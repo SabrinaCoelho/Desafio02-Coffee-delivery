@@ -6,7 +6,8 @@ export enum ActionTypes{
     DECREASE_ITEM = "DECREASE_ITEM",
     CHANGE_ITEM_UNIT = "CHANGE_ITEM_UNIT",
     ADD_DELIVERY_DATA = "ADD_DELIVERY_DATA",
-    ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE"
+    ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE",
+    PICKED_ITEM = "PICKED_ITEM"
 }
 
 export function addCartItemAction(newItem: CartItem){
@@ -21,6 +22,15 @@ export function addCartItemAction(newItem: CartItem){
 export function increaseItemAction(id: CartItem["id"]){
     return {
         type: ActionTypes.INCREASE_ITEM,
+        payload: {
+            id
+        }
+    }
+}
+
+export function setAsPickedAction(id: CartItem["id"]){
+    return {
+        type: ActionTypes.PICKED_ITEM,
         payload: {
             id
         }
