@@ -44,13 +44,22 @@ export function CartReducer(state: CartState, action: any){
             });
         case ActionTypes.CHANGE_ITEM_UNIT:
             return produce(state, draft => {
-                const itemToUpdateQuantity = draft.order.items.findIndex(
+                const itemToUpdateQuantity = draft.order.items.find(
+                    item => item.id === action.payload.item.id
+                );
+                console.log("update ->"+action.payload.item);
+                if(itemToUpdateQuantity && itemToUpdateQuantity.quantity){//check
+                    itemToUpdateQuantity.quantity = action.payload.item.quantity;
+                }
+            });
+        case ActionTypes.PICKED_ITEM:
+            return produce(state, draft => {
+                const pickedItem = draft.order.items.find(
                     item => item.id === action.payload.id
                 );
-                console.log(itemToUpdateQuantity);
-                /* if(itemToUpdateQuantity && itemToUpdateQuantity?.id){//check
-                    itemToUpdateQuantity.quantity = ;
-                } */
+                if(pickedItem){//check
+                    pickedItem.picked = !pickedItem.picked;
+                }
             });
         case ActionTypes.ADD_DELIVERY_DATA:
             return produce(state, draft => {
