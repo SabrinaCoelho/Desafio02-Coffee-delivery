@@ -16,7 +16,8 @@ export function InputNumber({coffeId}: InputNumberProps){
         setQuantity(value);
         addItem({
             id: coffeId,
-            quantity: value
+            quantity: value,
+            picked: false
         });
     }
     return(
