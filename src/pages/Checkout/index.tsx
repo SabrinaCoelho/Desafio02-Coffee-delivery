@@ -6,8 +6,34 @@ import { PaymentMode } from "./components/PaymentMode";
 import { PrimaryButton } from "../../components/Button/style";
 import { CartItem } from "./components/CartItem";
 import { TotalCart } from "./components/TotalCart";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { FormProvider, useForm } from "react-hook-form";
+
+const adressFormSchema = z.object({
+    zipCode: z.string().min(8, "Mínimo 8 caracteres").max(8, "Máximo 8 caracteres"),
+    street: z.string(),
+    number: z.string(),
+    comple: z.string(),
+    neighborhood: z.string(),
+    city: z.string(),
+    state: z.string()
+});
+
+type AdressFormData = z.infer<typeof adressFormSchema>
 
 export function Checkout(){
+    const newAdressForm = useForm<AdressFormData>({
+        resolver: zodResolver(adressFormSchema),
+        defaultValues:{}
+    });
+
+    function teste(data: AdressFormData){
+        console.log(data)
+    }
+
+    const {handleSubmit, watch, reset} = newAdressForm;
+    
     return (
         <CheckoutContainer>
             <ShippmentContainer>
@@ -20,7 +46,12 @@ export function Checkout(){
                             <TextS_Regular>Informe o endereço onde deseja receber seu pedido</TextS_Regular>
                         </div>
                     </AdressLabel>
-                    <AdressForm />
+                    <form onSubmit={handleSubmit(teste)}>
+                        <FormProvider {...newAdressForm}>
+                            <AdressForm />
+                        </FormProvider>
+                        <button type="submit">enviar</button>
+                    </form>
                 </AdressContainer>
                 <PaymentContainer>
                     <PaymentLabel>
