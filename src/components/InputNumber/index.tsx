@@ -14,7 +14,7 @@ export function InputNumber({coffeId}: InputNumberProps){
     function handleOnChange(event: ChangeEvent<HTMLInputElement>){
         const value = parseInt(event.target.value);
         setQuantity(value);
-        changeItemUnit({
+        addItem({
             id: coffeId,
             quantity: value
         });
