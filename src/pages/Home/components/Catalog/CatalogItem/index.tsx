@@ -20,16 +20,9 @@ type CatalogItemProps = {
 }
 
 export function CatalogItem({item}: CatalogItemProps){
-    
-    const {
-        order
-    } = useContext(CartContext);
-
-    console.log(item);
-    console.log(order);
+    const {setAsPicked} = useContext(CartContext);
     return(
         <CatatalogItemContainer>
-
             <SelectItemContainer>
                 <ItemPriceContainer>
                     R$
@@ -37,7 +30,7 @@ export function CatalogItem({item}: CatalogItemProps){
                 </ItemPriceContainer>
                 <div style={{display: "flex", gap: ".5rem"}}>
                     <InputNumber coffeId={item.id}/>
-                    <IconButton>
+                    <IconButton onClick={() => setAsPicked(item.id)}>
                         <ShoppingCartIcon size={22} weight="fill" />
                     </IconButton>
                 </div>
