@@ -1,12 +1,12 @@
 import { createContext, useReducer, type ReactNode } from "react";
 import { CartItem } from "../pages/Checkout/components/CartItem";
 import { CartReducer, type Cart } from "../reducers/cart/reducer";
-import { addCartItemAction, updateItemUnitAction } from "../reducers/cart/actions";
-import data from "../../data.json";
+import { addCartItemAction, updateItemUnitAction, setAsPickedAction } from "../reducers/cart/actions";
 
 export interface CartItem{
     id: number;
     quantity: number;
+    picked: boolean;
 }
 /* interface CreateCartData{
     order: CartItem[];
@@ -30,7 +30,7 @@ interface CartContextType{
     order: Cart | null;
     effective: boolean;
     addItem: (data: CartItem) => void;
-    changeItemUnit: (data: CartItem) => void;
+    setAsPicked: (id: number) => void;
     /* setAsEffective: () => void;
     createNewOrder: (data: CartItem) => void;
     setPaymentMode: (data: Payment) => void;
@@ -56,28 +56,24 @@ export function CartContextProvider({children}: CartContextProviderProps){
 
     const {order, effective} = cartState;
 
-    function addItem(newItem: CartItem){
-        const item: CartItem = {
-            id: newItem.id,
-            quantity: newItem.quantity
-        }
-
-        dispatch(addCartItemAction(item));
-    }
-
-    function changeItemUnit(itemUnit: CartItem){
+    function addItem(itemUnit: CartItem){
         //does the item already exists in the bascket?
         console.log(itemUnit)
-        const itemToUpdate = order.items.find(item => {
+        const itemExists = order.items.find(item => {
             return item.id === itemUnit.id
         });
         //yes?
-        if(itemToUpdate){//melhorar
+        if(itemExists){//melhorar
             //update to the new quantity
-            dispatch(updateItemUnitAction(itemToUpdate));
+            dispatch(updateItemUnitAction(itemUnit));
+        }else{
+            //no? Add to the bascket
+            dispatch(addCartItemAction(itemUnit));
         }
-        //no? Add to the bascket
-        addItem(itemUnit);
+    }
+
+    function setAsPicked(id: number){
+        dispatch(setAsPickedAction(id));
     }
 
     return(
@@ -85,8 +81,8 @@ export function CartContextProvider({children}: CartContextProviderProps){
             {   
                 order,
                 effective,
-                changeItemUnit,
-                addItem
+                addItem,
+                setAsPicked
             }} >
                 {children}
         </CartContext.Provider>
