@@ -45,6 +45,7 @@ export const IconButton = styled(BaseButton)`
     display: flex;
     color: ${props => props.theme["white"]};
     background: ${props => props.theme["purple-dark"]};
+    cursor: pointer;
 
     &:hover{
         background: ${props => props.theme["purple"]};
