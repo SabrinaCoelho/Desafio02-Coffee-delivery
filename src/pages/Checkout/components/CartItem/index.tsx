@@ -1,11 +1,11 @@
 import { TrashIcon } from "@phosphor-icons/react";
 import { SecondaryButton } from "../../../../components/Button/style";
 import { InputNumber } from "../../../../components/InputNumber";
-import { CartItemButtons, CartItemContainer, CartItemImg, CartItemInfo, CartItemPrice, CartItemTitle } from "./styles";
+import { CartItemButtons, CartItemContainer, CartItemImg, CartItemInfo, PriceCartItem, CartItemTitle } from "./styles";
 import expresso from "../../../../assets/coffee_types/expresso.png";
 import { Separator } from "../TotalCart/styles";
 
-export function CartItem(){
+export function CartItem(item: any){
     return(
         <>
             <CartItemContainer>
@@ -18,7 +18,7 @@ export function CartItem(){
                             Expresso Tradicional
                         </CartItemTitle>
                         <CartItemButtons>
-                            {/* <InputNumber/> */}
+                            <InputNumber coffeId={1}/>
                             <SecondaryButton>
                                 <TrashIcon size={16} />
                                 Remover
@@ -26,9 +26,9 @@ export function CartItem(){
                         </CartItemButtons>
                     </div>
                 </CartItemInfo>
-                <CartItemPrice>
+                <PriceCartItem>
                     R$9,90
-                </CartItemPrice>
+                </PriceCartItem>
             </CartItemContainer>
             <Separator />
         </>

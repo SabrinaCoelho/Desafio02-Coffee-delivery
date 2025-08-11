@@ -31,8 +31,9 @@ export const CartItemButtons = styled.div`
     gap: .5rem;
     margin-top: .5rem;
 `;
-export const CartItemPrice = styled.div`
+export const PriceCartItem = styled.div`
     color: ${props => props.theme["base-subtitle"]};
     ${mixins.text_m_bold}
     color: ${props => props.theme["base-text"]};
+    padding-top: .5rem;
 `;
