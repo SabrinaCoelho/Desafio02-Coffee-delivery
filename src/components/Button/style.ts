@@ -13,6 +13,7 @@ export const PrimaryButton = styled(BaseButton)`
     background: ${props => props.theme.yellow};
     padding: .75rem;
     color: white;
+    cursor: pointer;
     ${mixins.button_g};
 
     &:hover{
