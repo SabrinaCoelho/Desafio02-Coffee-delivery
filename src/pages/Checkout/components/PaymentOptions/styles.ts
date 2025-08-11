@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { mixins } from "../../../../styles/mixins";
 
 
-export const PaymentModeContainer = styled.div`
+export const PaymentOptionsContainer = styled.div`
     display: flex;
     gap: .75rem;
 `;
 
-export const Mode = styled.span`
+export const Mode = styled.label`
     display: flex;
     gap: .75rem;
     width: 100%;
@@ -21,10 +21,12 @@ export const Mode = styled.span`
     cursor: pointer;
     align-items: center;
 
-    & input{
+    input{
         display: none;
     }
-    & input:checked{
+    
+    &:has(input:checked){
+        border: 2px solid ${props => props.theme["purple"]};
         background: ${props => props.theme["purple-light"]};
     }
 `;
