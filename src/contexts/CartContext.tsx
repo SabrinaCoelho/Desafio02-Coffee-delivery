@@ -1,7 +1,7 @@
-import { createContext, useReducer, type ReactNode } from "react";
+import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import { CartItem } from "../pages/Checkout/components/CartItem";
 import { CartReducer, type Cart } from "../reducers/cart/reducer";
-import { addCartItemAction, updateItemUnitAction, setAsPickedAction } from "../reducers/cart/actions";
+import { addCartItemAction, updateItemUnitAction, setAsPickedAction, getSelectedItemsAction } from "../reducers/cart/actions";
 import {coffee_catalog} from "../../data.json";
 
 export interface CartItemType{
@@ -46,17 +46,28 @@ interface CartContextProviderProps{
 }
 
 export function CartContextProvider({children}: CartContextProviderProps){
-    const [cartState, dispatch] = useReducer(
+    const [CartState, dispatch] = useReducer(
         CartReducer,
         {
             order: {
                 items: []
-            },
-            effective: null
+            }
+        },
+        (initialArgs) => {
+            const storedStateAsJSON = localStorage.getItem("@ignite-coffee-delivery:cart-state-1.0.0")
+            if(storedStateAsJSON){
+                return JSON.parse(storedStateAsJSON);
+            }
+            return initialArgs;
         }
     );
 
-    const {order, effective} = cartState;
+    useEffect(() => {
+        const stateJSON = JSON.stringify(CartState);
+        localStorage.setItem("@ignite-coffee-delivery:cart-state-1.0.0", stateJSON)
+    }, [CartState])
+
+    const {order, effective} = CartState;
 
     function addItem(itemUnit: CartItemType){
         //does the item already exists in the bascket?
@@ -78,10 +89,10 @@ export function CartContextProvider({children}: CartContextProviderProps){
         dispatch(setAsPickedAction(id));
     }
     function getSelectedItems(){
-        const itemsInCart = order.items.map(
-            (item: CartItemType) => coffee_catalog.find(c => c.id === item.id)
-        )
-        console.log(itemsInCart)
+        console.log("aqui")
+        console.log(order)
+
+        dispatch(getSelectedItemsAction(order.items))
     }
 
     return(

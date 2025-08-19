@@ -13,6 +13,7 @@ export interface Coffee{
     description: string;
     price: string;
     img: string;
+    quantity?: number;
 }
 
 type CatalogItemProps = {

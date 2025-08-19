@@ -1,6 +1,8 @@
 import { produce } from "immer";
-import type { CartItem, Delivery, Payment } from "../../contexts/CartContext";
+import type { CartItem, CartItemType, Delivery, Payment } from "../../contexts/CartContext";
 import { ActionTypes } from "./actions";
+import type { Coffee } from "../../pages/Home/components/Catalog/CatalogItem";
+import {coffee_catalog} from "../../../data.json";
 
 export interface Cart{
     items: CartItem[];
@@ -15,8 +17,8 @@ interface CartState{
 }
 
 export function CartReducer(state: CartState, action: any){
-    console.log(state);
-    console.log(action);
+    /* console.log(state);
+    console.log(action); */
 
     switch(action.type){
         case ActionTypes.ADD_ITEM:
@@ -69,6 +71,18 @@ export function CartReducer(state: CartState, action: any){
             return produce(state, draft => {
                 draft.order.payment = action.payload.paymentMode
             })
+        case ActionTypes.GET_SELECTED_ITEMS:
+           const objs = state.order.items.find((item: CartItemType) => {
+                coffee_catalog.forEach((e: Coffee) => e.id === item.id)
+           })
+           console.log(objs)
+           return {}
+           /* objs.forEach(e => {
+                {
+                    ...e,
+                    quantity
+                }
+            }) */
         default:
             return state;
     }

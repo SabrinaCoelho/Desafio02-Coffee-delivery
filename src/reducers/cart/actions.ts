@@ -1,4 +1,4 @@
-import type { CartItem, Delivery, Payment } from "../../contexts/CartContext";
+import type { CartItem, CartItemType, Delivery, Payment } from "../../contexts/CartContext";
 
 export enum ActionTypes{
     ADD_ITEM = "ADD_ITEM",
@@ -7,7 +7,8 @@ export enum ActionTypes{
     CHANGE_ITEM_UNIT = "CHANGE_ITEM_UNIT",
     ADD_DELIVERY_DATA = "ADD_DELIVERY_DATA",
     ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE",
-    PICKED_ITEM = "PICKED_ITEM"
+    PICKED_ITEM = "PICKED_ITEM",
+    GET_SELECTED_ITEMS = "GET_SELECTED_ITEMS"
 }
 
 export function addCartItemAction(newItem: CartItem){
@@ -69,6 +70,15 @@ export function addPaymentModeAction(paymentMode: Payment){
         type: ActionTypes.ADD_PAYMENT_MODE,
         payload:{
             paymentMode
+        }
+    }
+}
+
+export function getSelectedItemsAction(order: CartItemType[]){
+    return{
+        type: ActionTypes.GET_SELECTED_ITEMS,
+        payload: {
+            order
         }
     }
 }
