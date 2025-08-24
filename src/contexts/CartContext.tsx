@@ -1,6 +1,5 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
-import { CartItem } from "../pages/Checkout/components/CartItem";
-import { CartReducer, type Cart } from "../reducers/cart/reducer";
+import { cartReducer, type Cart } from "../reducers/cart/reducer";
 import { addCartItemAction, updateItemUnitAction, setAsPickedAction, getSelectedItemsAction } from "../reducers/cart/actions";
 import {coffee_catalog} from "../../data.json";
 
@@ -46,12 +45,13 @@ interface CartContextProviderProps{
 }
 
 export function CartContextProvider({children}: CartContextProviderProps){
-    const [CartState, dispatch] = useReducer(
-        CartReducer,
+    const [cartState, dispatch] = useReducer(
+        cartReducer,
         {
             order: {
                 items: []
-            }
+            },
+            effective: null
         },
         (initialArgs) => {
             const storedStateAsJSON = localStorage.getItem("@ignite-coffee-delivery:cart-state-1.0.0")
@@ -63,25 +63,28 @@ export function CartContextProvider({children}: CartContextProviderProps){
     );
 
     useEffect(() => {
-        const stateJSON = JSON.stringify(CartState);
+        const stateJSON = JSON.stringify(cartState);
         localStorage.setItem("@ignite-coffee-delivery:cart-state-1.0.0", stateJSON)
-    }, [CartState])
+    }, [cartState])
 
-    const {order, effective} = CartState;
+    const {order, effective} = cartState;
 
     function addItem(itemUnit: CartItemType){
         //does the item already exists in the bascket?
         console.log(itemUnit)
-        const itemExists = order.items.find(item => {
-            return item.id === itemUnit.id
-        });
-        //yes?
-        if(itemExists){//melhorar
-            //update to the new quantity
-            dispatch(updateItemUnitAction(itemUnit));
-        }else{
-            //no? Add to the bascket
-            dispatch(addCartItemAction(itemUnit));
+        if(order && order.items){
+            const itemExists = order.items.find(item => {
+                return item.id === itemUnit.id
+            });
+            //yes?
+            if(itemExists){//melhorar
+                //update to the new quantity
+                dispatch(updateItemUnitAction(itemUnit));
+            }
+            else{
+                //no? Add to the bascket
+                dispatch(addCartItemAction(itemUnit));
+            }
         }
     }
 

@@ -48,8 +48,8 @@ export function CatalogItem({item}: CatalogItemProps){
             
             <TagsContainer>
                 {
-                    item.tags.map((tag: string) => (
-                        <Tag>
+                    item.tags.map((tag: string, id: number) => (
+                        <Tag key={id}>
                             <TextTag>{tag}</TextTag>
                         </Tag>
                     ))

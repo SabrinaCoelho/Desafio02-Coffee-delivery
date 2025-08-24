@@ -73,7 +73,7 @@ export function Checkout(){
                             <TitleXS>Cafés selecionados</TitleXS>
                             <SelectedItemstContainer>
                                 {
-                                    order?.items.map(item => (<CartItem item={item}/>))
+                                    order?.items.map(item => (<CartItem key={item.id} item={item}/>))
                                 }
                                 
                                 <TotalCart />

@@ -1,11 +1,11 @@
 import { produce } from "immer";
-import type { CartItem, CartItemType, Delivery, Payment } from "../../contexts/CartContext";
+import type { CartItemType, Delivery, Payment } from "../../contexts/CartContext";
 import { ActionTypes } from "./actions";
 import type { Coffee } from "../../pages/Home/components/Catalog/CatalogItem";
 import {coffee_catalog} from "../../../data.json";
 
 export interface Cart{
-    items: CartItem[];
+    items: CartItemType[];//selectedItems + add itemsDetails
     payment?: Payment;
     delivery?: Delivery;
     total?: number;
@@ -13,10 +13,10 @@ export interface Cart{
 
 interface CartState{
     order: Cart;
-    effective: boolean | null;
+    effective: boolean | null;//tira
 }
 
-export function CartReducer(state: CartState, action: any){
+export function cartReducer(state: CartState, action: any){
     /* console.log(state);
     console.log(action); */
 
@@ -24,6 +24,8 @@ export function CartReducer(state: CartState, action: any){
         case ActionTypes.ADD_ITEM:
             console.log("ON ADD ITEM")
             return produce(state, draft => {
+                console.log(state)
+                console.log(draft)
                 draft.order.items.push(action.payload.newItem);
             });
         case ActionTypes.INCREASE_ITEM:
@@ -71,18 +73,13 @@ export function CartReducer(state: CartState, action: any){
             return produce(state, draft => {
                 draft.order.payment = action.payload.paymentMode
             })
-        case ActionTypes.GET_SELECTED_ITEMS:
-           const objs = state.order.items.find((item: CartItemType) => {
-                coffee_catalog.forEach((e: Coffee) => e.id === item.id)
+        case ActionTypes.GET_SELECTED_ITEMS: {
+            const itemsDetails: Coffee[] = [];
+            state.order.items.forEach((item: CartItemType) => {
+                itemsDetails.push(coffee_catalog.filter((cc: Coffee) => cc.id === item.id))//&& item.picked
            })
-           console.log(objs)
-           return {}
-           /* objs.forEach(e => {
-                {
-                    ...e,
-                    quantity
-                }
-            }) */
+           return itemsDetails;
+        }
         default:
             return state;
     }
