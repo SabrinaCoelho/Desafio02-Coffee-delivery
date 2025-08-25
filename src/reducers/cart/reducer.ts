@@ -5,15 +5,16 @@ import type { Coffee } from "../../pages/Home/components/Catalog/CatalogItem";
 import {coffee_catalog} from "../../../data.json";
 
 export interface Cart{
-    items: CartItemType[];//selectedItems + add itemsDetails
+    items: CartItemType[]; //nao existia
     payment?: Payment;
     delivery?: Delivery;
     total?: number;
 }
 
-interface CartState{
+export interface CartState{
     order: Cart;
-    effective: boolean | null;//tira
+    itemsDetails: Coffee[];//antes era items
+    effective: boolean;
 }
 
 export function cartReducer(state: CartState, action: any){
@@ -33,36 +34,36 @@ export function cartReducer(state: CartState, action: any){
                 const itemToIncrease = draft.order.items.find(
                     item => item.id === action.payload.id
                 );
-                if(itemToIncrease && itemToIncrease.id){//check
-                    itemToIncrease.id += 1;
+                if(itemToIncrease && itemToIncrease.quantity){//check
+                    itemToIncrease.quantity += 1;
                 }
             });
         case ActionTypes.DECREASE_ITEM:
             return produce(state, draft => {
-                const itemToIncrease = draft.order.items.find(
+                const itemToDecrease = draft.order.items.find(
                     item => item.id === action.payload.id
                 );
-                if(itemToIncrease && itemToIncrease.id){//check
-                    itemToIncrease.id -= 1;
+                if(itemToDecrease && itemToDecrease.quantity){//check
+                    itemToDecrease.quantity -= 1;
                 }
+            });
+        case ActionTypes.REMOVE_ITEM:
+            return produce(state, draft => {
+                draft.order.items = draft.order.items.filter(
+                    item => {
+                        console.log(item.id !== action.payload.id)
+                        return item.id !== action.payload.id
+                    }
+                );
             });
         case ActionTypes.CHANGE_ITEM_UNIT:
             return produce(state, draft => {
-                const itemToUpdateQuantity = draft.order.items.find(
+                const itemToUpdateQuantity = draft.selectedItems.find(
                     item => item.id === action.payload.item.id
                 );
                 console.log("update ->"+action.payload.item);
                 if(itemToUpdateQuantity && itemToUpdateQuantity.quantity){//check
                     itemToUpdateQuantity.quantity = action.payload.item.quantity;
-                }
-            });
-        case ActionTypes.PICKED_ITEM:
-            return produce(state, draft => {
-                const pickedItem = draft.order.items.find(
-                    item => item.id === action.payload.id
-                );
-                if(pickedItem){//check
-                    pickedItem.picked = !pickedItem.picked;
                 }
             });
         case ActionTypes.ADD_DELIVERY_DATA:
@@ -73,13 +74,6 @@ export function cartReducer(state: CartState, action: any){
             return produce(state, draft => {
                 draft.order.payment = action.payload.paymentMode
             })
-        case ActionTypes.GET_SELECTED_ITEMS: {
-            const itemsDetails: Coffee[] = [];
-            state.order.items.forEach((item: CartItemType) => {
-                itemsDetails.push(coffee_catalog.filter((cc: Coffee) => cc.id === item.id))//&& item.picked
-           })
-           return itemsDetails;
-        }
         default:
             return state;
     }

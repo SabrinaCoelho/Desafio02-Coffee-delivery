@@ -3,17 +3,16 @@ import { IconButton } from "../../../../../components/Button/style";
 import { InputNumber } from "../../../../../components/InputNumber";
 import { TextL_Bold, TextS_Regular, TextTag } from "../../Typography/styles";
 import { CatatalogItemContainer, ItemInfosContainer, ItemPrice, ItemPriceContainer, SelectItemContainer, Tag, TagsContainer } from "./styles";
-import { useContext } from "react";
-import { CartContext } from "../../../../../contexts/CartContext";
+import { useContext, useState } from "react";
+import { CartContext, type CartItemType } from "../../../../../contexts/CartContext";
 
-export interface Coffee{
-    id: number;
-    tags: string[];
+export interface Coffee extends CartItemType{
+    tags: string[] | undefined;
     name: string;
     description: string;
     price: string;
     img: string;
-    quantity?: number;
+    picked?: boolean | null;
 }
 
 type CatalogItemProps = {
@@ -21,7 +20,24 @@ type CatalogItemProps = {
 }
 
 export function CatalogItem({item}: CatalogItemProps){
-    const {setAsPicked} = useContext(CartContext);
+    //const {setAsPicked} = useContext(CartContext);
+    const [itemQty, setItemQty] = useState(0);
+
+    const {addItem} = useContext(CartContext);
+    
+    function handleOnClick(event: any){
+        addItem({
+            id: item.id,
+            quantity: itemQty
+        });
+    }
+
+    function handleOnChange(newQty: number){
+        //nee to check if the item already exists on cart
+        //const value = parseInt(event.target.value);
+        setItemQty(newQty);
+    }
+
     return(
         <CatatalogItemContainer>
             <SelectItemContainer>
@@ -30,8 +46,8 @@ export function CatalogItem({item}: CatalogItemProps){
                     <ItemPrice>{item.price}</ItemPrice>
                 </ItemPriceContainer>
                 <div style={{display: "flex", gap: ".5rem"}}>
-                    <InputNumber coffeId={item.id}/>
-                    <IconButton onClick={() => setAsPicked(item.id)}>
+                    <InputNumber itemId={item.id} itemQty={itemQty} handleOnChangeQty={handleOnChange}/>
+                    <IconButton onClick={(event) => handleOnClick(event)}>
                         <ShoppingCartIcon size={22} weight="fill" />
                     </IconButton>
                 </div>

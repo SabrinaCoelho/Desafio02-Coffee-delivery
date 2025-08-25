@@ -10,7 +10,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useContext } from "react";
-import { CartContext } from "../../contexts/CartContext";
+import { CartContext, type CartItemType } from "../../contexts/CartContext";
+import type { Coffee } from "../Home/components/Catalog/CatalogItem";
+import { coffee_catalog } from "../../../data.json";
 
 const adressFormSchema = z.object({
     zip: z.string().max(8, {error: "Máximo 8 caracteres"}),
@@ -26,20 +28,28 @@ const adressFormSchema = z.object({
 type AdressFormData = z.infer<typeof adressFormSchema>
 
 export function Checkout(){
-    const {order, getSelectedItems} = useContext(CartContext);
+    const {order} = useContext(CartContext);
     const newAdressForm = useForm<AdressFormData>({
         mode: "onChange",
         resolver: zodResolver(adressFormSchema),
         defaultValues:{}
     });
 
-    
+    const selectedItems = order?.items.map((item: CartItemType) => {
+        const found = coffee_catalog.find((cc: Coffee) => cc.id === item.id)
+        console.log(found)
+        return {
+            ...found,
+            quantity: item.quantity
+        }
+    })
+
     const {handleSubmit, formState: {errors}} = newAdressForm;
     
     function teste(data: AdressFormData){
         console.log(data);
     }
-    
+
     return (
         <form onSubmit={handleSubmit(teste)}>
             <CheckoutContainer>
@@ -73,14 +83,14 @@ export function Checkout(){
                             <TitleXS>Cafés selecionados</TitleXS>
                             <SelectedItemstContainer>
                                 {
-                                    order?.items.map(item => (<CartItem key={item.id} item={item}/>))
+                                    selectedItems?.map(item => <CartItem key={item.id} item={item}/>)
                                 }
                                 
                                 <TotalCart />
                                 <PrimaryButton type="submit">
                                     Confirmar pedido
                                 </PrimaryButton>
-                                <button type="button" onClick={() => getSelectedItems()}>testee</button>
+                                {/* <button type="button" onClick={() => handleOnClick()}>testee</button> */}
                             </SelectedItemstContainer>
                         </PurchaseInfo>
                     </FormProvider>

@@ -4,6 +4,7 @@ export enum ActionTypes{
     ADD_ITEM = "ADD_ITEM",
     INCREASE_ITEM = "INCREASE_ITEM",
     DECREASE_ITEM = "DECREASE_ITEM",
+    REMOVE_ITEM = "REMOVE_ITEM",
     CHANGE_ITEM_UNIT = "CHANGE_ITEM_UNIT",
     ADD_DELIVERY_DATA = "ADD_DELIVERY_DATA",
     ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE",
@@ -29,18 +30,18 @@ export function increaseItemAction(id: CartItem["id"]){
     }
 }
 
-export function setAsPickedAction(id: CartItem["id"]){
+export function decreaseItemAction(id: CartItem["id"]){
     return {
-        type: ActionTypes.PICKED_ITEM,
+        type: ActionTypes.DECREASE_ITEM,
         payload: {
             id
         }
     }
 }
 
-export function deacreaseItemAction(id: CartItem["id"]){
+export function removeItemAction(id: CartItem["id"]){
     return {
-        type: ActionTypes.INCREASE_ITEM,
+        type: ActionTypes.REMOVE_ITEM,
         payload: {
             id
         }
@@ -74,11 +75,9 @@ export function addPaymentModeAction(paymentMode: Payment){
     }
 }
 
-export function getSelectedItemsAction(order: CartItemType[]){
+export function getSelectedItemsAction(){
     return{
         type: ActionTypes.GET_SELECTED_ITEMS,
-        payload: {
-            order
-        }
+        payload: {}
     }
 }

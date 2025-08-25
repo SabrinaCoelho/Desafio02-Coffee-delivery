@@ -1,12 +1,12 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import { cartReducer, type Cart } from "../reducers/cart/reducer";
-import { addCartItemAction, updateItemUnitAction, setAsPickedAction, getSelectedItemsAction } from "../reducers/cart/actions";
+import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction } from "../reducers/cart/actions";
 import {coffee_catalog} from "../../data.json";
 
 export interface CartItemType{
     id: number;
-    quantity: number;
-    picked: boolean;
+    quantity?: number;
+    // price?
 }
 /* interface CreateCartData{
     order: CartItem[];
@@ -30,8 +30,9 @@ interface CartContextType{
     order: Cart | null;
     effective: boolean;
     addItem: (data: CartItemType) => void;
-    setAsPicked: (id: number) => void;
-    getSelectedItems: () => void;
+    increaseItem: (itemId: number) => void;
+    decreaseItem: (itemId: number) => void;
+    removeItem: (itemId: number) => void;
     /* setAsEffective: () => void;
     createNewOrder: (data: CartItem) => void;
     setPaymentMode: (data: Payment) => void;
@@ -51,7 +52,7 @@ export function CartContextProvider({children}: CartContextProviderProps){
             order: {
                 items: []
             },
-            effective: null
+            itemsDetails: []
         },
         (initialArgs) => {
             const storedStateAsJSON = localStorage.getItem("@ignite-coffee-delivery:cart-state-1.0.0")
@@ -88,24 +89,26 @@ export function CartContextProvider({children}: CartContextProviderProps){
         }
     }
 
-    function setAsPicked(id: number){
-        dispatch(setAsPickedAction(id));
-    }
-    function getSelectedItems(){
-        console.log("aqui")
-        console.log(order)
-
-        dispatch(getSelectedItemsAction(order.items))
+    function increaseItem(itemId: number){
+        dispatch(increaseItemAction(itemId))
     }
 
+    function decreaseItem(itemId: number){
+        dispatch(decreaseItemAction(itemId))
+    }
+
+    function removeItem(itemId: number){
+        dispatch(removeItemAction(itemId))
+    }
     return(
         <CartContext.Provider value={
             {   
                 order,
                 effective,
                 addItem,
-                setAsPicked,
-                getSelectedItems
+                increaseItem,
+                decreaseItem,
+                removeItem
             }} >
                 {children}
         </CartContext.Provider>
