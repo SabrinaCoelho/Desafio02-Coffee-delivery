@@ -43,7 +43,7 @@ export function CartItem({item}: CartItemProps){
                     </div>
                 </CartItemInfo>
                 <PriceCartItem>
-                    R$9,90
+                    R$ {item.price}
                 </PriceCartItem>
             </CartItemContainer>
             <Separator />
