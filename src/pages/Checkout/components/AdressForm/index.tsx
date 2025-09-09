@@ -1,23 +1,18 @@
 import { useFormContext } from "react-hook-form";
 import { InputText } from "../../../../components/InputText";
 import { FormContainer, InlineForm } from "./styles";
-import { CartContext } from "../../../../contexts/CartContext";
-import { useContext } from "react";
-
-
+import { useHookFormMask } from 'use-mask-input';
 
 export function AdressForm(){
-    
-    const {order} = useContext(CartContext);
     const { register, formState: { errors } } = useFormContext();
+    const registerWithMask = useHookFormMask(register);
+     
     return(
         <FormContainer>
-            <InputText 
-                id="zip"
+            <InputText
+                {...registerWithMask("zip", ['9999-999'], { showMaskOnFocus: true })}
+                type="text"
                 placeholder="CEP" 
-                width="12.5rem"
-                {...register("zip")}
-                errorMessage={errors && errors.zip && `${errors.zip?.message}`}
             />
             <InputText 
                 id="street"
