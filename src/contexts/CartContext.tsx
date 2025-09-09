@@ -1,12 +1,11 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import { cartReducer, type Cart } from "../reducers/cart/reducer";
-import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction } from "../reducers/cart/actions";
-import {coffee_catalog} from "../../data.json";
+import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction, updateTotalAction, updateItemAmountAction } from "../reducers/cart/actions";
 
 export interface CartItemType{
     id: number;
     quantity?: number;
-    // price?
+    itemAmount?: number;
 }
 /* interface CreateCartData{
     order: CartItem[];
@@ -20,6 +19,7 @@ export interface Delivery{
     neighborhood: string;
     city: string;
     state: string;
+    fee?: number;
 }
 
 export interface Payment{//add enum?
@@ -33,6 +33,8 @@ interface CartContextType{
     increaseItem: (itemId: number) => void;
     decreaseItem: (itemId: number) => void;
     removeItem: (itemId: number) => void;
+    updateItemAmount: (itemId: number, amount: number) => void;
+    updateTotal: () => void;
     /* setAsEffective: () => void;
     createNewOrder: (data: CartItem) => void;
     setPaymentMode: (data: Payment) => void;
@@ -100,6 +102,13 @@ export function CartContextProvider({children}: CartContextProviderProps){
     function removeItem(itemId: number){
         dispatch(removeItemAction(itemId))
     }
+
+    function updateItemAmount(itemId: number, amount: number){
+        dispatch(updateItemAmountAction(itemId, amount))
+    }
+    function updateTotal(){
+        dispatch(updateTotalAction())
+    }
     return(
         <CartContext.Provider value={
             {   
@@ -108,7 +117,9 @@ export function CartContextProvider({children}: CartContextProviderProps){
                 addItem,
                 increaseItem,
                 decreaseItem,
-                removeItem
+                removeItem,
+                updateItemAmount,
+                updateTotal
             }} >
                 {children}
         </CartContext.Provider>
