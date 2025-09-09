@@ -9,7 +9,9 @@ export enum ActionTypes{
     ADD_DELIVERY_DATA = "ADD_DELIVERY_DATA",
     ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE",
     PICKED_ITEM = "PICKED_ITEM",
-    GET_SELECTED_ITEMS = "GET_SELECTED_ITEMS"
+    GET_SELECTED_ITEMS = "GET_SELECTED_ITEMS",
+    UPDATE_TOTAL = "UPDATE_TOTAL",
+    UPDATE_ITEM_AMOUNT = "UPDATE_ITEM_AMOUNT"
 }
 
 export function addCartItemAction(newItem: CartItem){
@@ -79,5 +81,22 @@ export function getSelectedItemsAction(){
     return{
         type: ActionTypes.GET_SELECTED_ITEMS,
         payload: {}
+    }
+}
+
+export function updateTotalAction(){
+    return{
+        type: ActionTypes.UPDATE_TOTAL,
+        payload: {}
+    }
+}
+
+export function updateItemAmountAction(id: CartItem["id"], amount: number){
+    return{
+        type: ActionTypes.UPDATE_ITEM_AMOUNT,
+        payload: {
+            id,
+            amount
+        }
     }
 }

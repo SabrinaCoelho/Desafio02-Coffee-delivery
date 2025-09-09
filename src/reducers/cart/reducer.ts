@@ -58,7 +58,7 @@ export function cartReducer(state: CartState, action: any){
             });
         case ActionTypes.CHANGE_ITEM_UNIT:
             return produce(state, draft => {
-                const itemToUpdateQuantity = draft.selectedItems.find(
+                const itemToUpdateQuantity = draft.selectedItems.find(//TODO CHECK OUT
                     item => item.id === action.payload.item.id
                 );
                 console.log("update ->"+action.payload.item);
@@ -73,6 +73,20 @@ export function cartReducer(state: CartState, action: any){
         case ActionTypes.ADD_PAYMENT_MODE:
             return produce(state, draft => {
                 draft.order.payment = action.payload.paymentMode
+            })
+        case ActionTypes.UPDATE_TOTAL:
+            return produce(state, draft => {
+                draft.order.total =  state.order.items.map(e => e.itemAmount).reduce((accumulator: number, currentValue: number) => accumulator + currentValue, 0).toFixed(2);
+            })
+        case ActionTypes.UPDATE_ITEM_AMOUNT:
+            return produce(state, draft => {
+                //need to indentify the item before update total item amount
+                const itemToUpdateAmount = draft.order.items.find(
+                    item => item.id === action.payload.id
+                );
+                if(itemToUpdateAmount){
+                    itemToUpdateAmount.itemAmount = action.payload.amount;
+                }
             })
         default:
             return state;
