@@ -15,7 +15,7 @@ import type { Coffee } from "../Home/components/Catalog/CatalogItem";
 import { coffee_catalog } from "../../../data.json";
 
 const adressFormSchema = z.object({
-    zip: z.string().max(8, {error: "Máximo 8 caracteres"}),
+    zip: z.string().min(8, {error: "Mínimo 8 caracteres"}),//TODO VALIATION
     street: z.string().min(5, {error: "Mínimo 5 caracteres"}).max(40, {error: "Máximo 40 caracteres"}),
     number: z.string().min(2, {error: "Mínimo 2 caracteres"}),
     comple: z.string(),
@@ -23,24 +23,36 @@ const adressFormSchema = z.object({
     city: z.string().min(4, {error: "Mínimo 4 caracteres"}),
     state: z.string().min(2, {error: "Mínimo 2 caracteres"}),
     pay_mode: z.enum(['credit', 'debit', 'cash'], {error: "Selecione um meio de pagamento"}),
+    fee: z.string().default("3,50")
 });
 
 type AdressFormData = z.infer<typeof adressFormSchema>
 
 export function Checkout(){
-    const {order} = useContext(CartContext);
+    const {order, updateTotal, updateItemAmount} = useContext(CartContext);
     const newAdressForm = useForm<AdressFormData>({
         mode: "onChange",
         resolver: zodResolver(adressFormSchema),
         defaultValues:{}
     });
 
+    function calculateItemAmount(itemPrice: string, itemQty: number): number{
+        // return ((parseFloat(itemPrice) * itemQty).toFixed(2)).replace(".", ",")
+        return parseFloat(itemPrice) * itemQty
+    }
     const selectedItems = order?.items.map((item: CartItemType) => {
         const found = coffee_catalog.find((cc: Coffee) => cc.id === item.id)
         console.log(found)
-        return {
-            ...found,
-            quantity: item.quantity
+        if(found && item.quantity){
+            const itemPrice = calculateItemAmount(found.price, item.quantity);
+            updateItemAmount(item.id, itemPrice)
+            updateTotal()
+
+            return {
+                ...found,
+                quantity: item.quantity,
+                price: (itemPrice).toFixed(2).replace(".", ",")
+            }
         }
     })
 
@@ -90,7 +102,7 @@ export function Checkout(){
                                 <PrimaryButton type="submit">
                                     Confirmar pedido
                                 </PrimaryButton>
-                                {/* <button type="button" onClick={() => handleOnClick()}>testee</button> */}
+                                {/* <button type="button" onClick={() => console.log(order)}>testee</button> */}
                             </SelectedItemstContainer>
                         </PurchaseInfo>
                     </FormProvider>
