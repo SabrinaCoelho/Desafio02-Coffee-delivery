@@ -84,19 +84,22 @@ export function getSelectedItemsAction(){
     }
 }
 
-export function updateTotalAction(){
+export function updateTotalAction({totalOrderAmount, productsTotal, deliveryFee}: any){
     return{
         type: ActionTypes.UPDATE_TOTAL,
-        payload: {}
+        payload: {
+            totalOrderAmount,
+            productsTotal,
+            deliveryFee
+        }
     }
 }
 
-export function updateItemAmountAction(id: CartItem["id"], amount: number){
+export function updateItemAmountAction(itemsPrice: any[]){
     return{
         type: ActionTypes.UPDATE_ITEM_AMOUNT,
         payload: {
-            id,
-            amount
+            itemsPrice
         }
     }
 }
