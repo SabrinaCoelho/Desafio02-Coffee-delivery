@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import { cartReducer, type Cart } from "../reducers/cart/reducer";
-import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction, updateTotalAction, updateItemAmountAction } from "../reducers/cart/actions";
+import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction, updateTotalAction, updateItemAmountAction, addDeliveryDataAction } from "../reducers/cart/actions";
 
 export interface CartItemType{
     id: number;
@@ -12,13 +12,14 @@ export interface CartItemType{
 } */
 
 export interface Delivery{
-    zipCode: string;
+    zip: string;
     street: string;
     number: string;
-    aditional?: string;
+    comple?: string;
     neighborhood: string;
     city: string;
     state: string;
+    pay_mode: 'credit'| 'debit'| 'cash';
     fee?: number;
 }
 
@@ -33,12 +34,9 @@ interface CartContextType{
     increaseItem: (itemId: number) => void;
     decreaseItem: (itemId: number) => void;
     removeItem: (itemId: number) => void;
-    updateItemAmount: (itemId: number, amount: number) => void;
-    updateTotal: () => void;
-    /* setAsEffective: () => void;
-    createNewOrder: (data: CartItem) => void;
-    setPaymentMode: (data: Payment) => void;
-    setDeliveryData: (data: Delivery) => void; */
+    updateItemAmount: (itemsPrice: CartItemType[]) => void;
+    updateTotal: (totalS: any) => void;
+    addDeliveryData: (data: Delivery) => void;
 }
 
 export const CartContext = createContext({} as CartContextType);
@@ -103,11 +101,19 @@ export function CartContextProvider({children}: CartContextProviderProps){
         dispatch(removeItemAction(itemId))
     }
 
-    function updateItemAmount(itemId: number, amount: number){
-        dispatch(updateItemAmountAction(itemId, amount))
+    function updateItemAmount(itemsPrice: any[]){
+        // dispatch(updateItemAmountAction(itemId, amount))
+        console.log(itemsPrice)
+        dispatch(updateItemAmountAction(itemsPrice))
     }
-    function updateTotal(){
-        dispatch(updateTotalAction())
+    function updateTotal(totalS: any){
+        dispatch(updateTotalAction(totalS))
+    }
+
+    function addDeliveryData(data: Delivery){
+        // const delivery = {...data};
+        dispatch(addDeliveryDataAction(data));
+        
     }
     return(
         <CartContext.Provider value={
@@ -119,7 +125,8 @@ export function CartContextProvider({children}: CartContextProviderProps){
                 decreaseItem,
                 removeItem,
                 updateItemAmount,
-                updateTotal
+                updateTotal,
+                addDeliveryData
             }} >
                 {children}
         </CartContext.Provider>
