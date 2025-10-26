@@ -6,6 +6,7 @@ import { Separator } from "../TotalCart/styles";
 import type { Coffee } from "../../../Home/components/Catalog/CatalogItem";
 import { useContext, useState } from "react";
 import { CartContext } from "../../../../contexts/CartContext";
+import { utils } from "../../../../utils";
 
 interface CartItemProps{
     item: Coffee;
@@ -43,7 +44,7 @@ export function CartItem({item}: CartItemProps){
                     </div>
                 </CartItemInfo>
                 <PriceCartItem>
-                    R$ {item.price}
+                    {utils.formatCurrency(item.itemAmount)}
                 </PriceCartItem>
             </CartItemContainer>
             <Separator />
