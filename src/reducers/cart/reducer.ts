@@ -2,13 +2,14 @@ import { produce } from "immer";
 import type { CartItemType, Delivery, Payment } from "../../contexts/CartContext";
 import { ActionTypes } from "./actions";
 import type { Coffee } from "../../pages/Home/components/Catalog/CatalogItem";
-import {coffee_catalog} from "../../../data.json";
 
 export interface Cart{
     items: CartItemType[]; //nao existia
     payment?: Payment;
     delivery?: Delivery;
-    total?: number;
+    productsTotal?: number
+    totalOrderAmount?: number;
+    deliveryFee?: number;
 }
 
 export interface CartState{
@@ -25,8 +26,6 @@ export function cartReducer(state: CartState, action: any){
         case ActionTypes.ADD_ITEM:
             console.log("ON ADD ITEM")
             return produce(state, draft => {
-                console.log(state)
-                console.log(draft)
                 draft.order.items.push(action.payload.newItem);
             });
         case ActionTypes.INCREASE_ITEM:
@@ -68,7 +67,7 @@ export function cartReducer(state: CartState, action: any){
             });
         case ActionTypes.ADD_DELIVERY_DATA:
             return produce(state, draft => {
-                draft.order.delivery = action.payload.deliveryData
+                draft.order.delivery = action.payload.orderTotalAmount
             });
         case ActionTypes.ADD_PAYMENT_MODE:
             return produce(state, draft => {
@@ -76,17 +75,24 @@ export function cartReducer(state: CartState, action: any){
             })
         case ActionTypes.UPDATE_TOTAL:
             return produce(state, draft => {
-                draft.order.total =  state.order.items.map(e => e.itemAmount).reduce((accumulator: number, currentValue: number) => accumulator + currentValue, 0).toFixed(2);
+                draft.order.totalOrderAmount = action.payload.totalOrderAmount;
+                draft.order.productsTotal = action.payload.productsTotal;
+                draft.order.deliveryFee = action.payload.deliveryFee;
             })
         case ActionTypes.UPDATE_ITEM_AMOUNT:
             return produce(state, draft => {
-                //need to indentify the item before update total item amount
-                const itemToUpdateAmount = draft.order.items.find(
-                    item => item.id === action.payload.id
+                //indentify the item before update total item amount
+                
+                draft.order.items.forEach(item => {
+                    const itemToUpdateAmount = action.payload.itemsPrice.find(
+                        selectedItem => item.id === selectedItem.id
+                    )
+                    if(itemToUpdateAmount){
+                        item.itemAmount = itemToUpdateAmount.itemAmount;
+                    }
+                    }
                 );
-                if(itemToUpdateAmount){
-                    itemToUpdateAmount.itemAmount = action.payload.amount;
-                }
+                
             })
         default:
             return state;
