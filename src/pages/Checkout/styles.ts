@@ -53,7 +53,9 @@ export const SelectedItemstContainer = styled.div`
     padding: 2.5rem;
     border-radius: 6px 44px 6px 44px;
     background: ${props => props.theme["base-card"]};
-    
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 `;
 
 export const PurchaseInfo = styled.div`
