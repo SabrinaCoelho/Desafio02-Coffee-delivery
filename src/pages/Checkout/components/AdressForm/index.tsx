@@ -10,7 +10,7 @@ export function AdressForm(){
     return(
         <FormContainer>
             <InputText
-                {...registerWithMask("zip", ['9999-999'], { showMaskOnFocus: true })}
+                {...registerWithMask("zip", ['99999-999'], { showMaskOnFocus: true })}
                 type="text"
                 placeholder="CEP" 
             />
