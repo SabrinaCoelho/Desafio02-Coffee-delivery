@@ -9,37 +9,104 @@ import { TotalCart } from "./components/TotalCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
-import { useContext } from "react";
-import { CartContext } from "../../contexts/CartContext";
+import { useContext, useEffect, useMemo } from "react";
+import { CartContext, type CartItemType } from "../../contexts/CartContext";
+import type { Coffee } from "../Home/components/Catalog/CatalogItem";
+import { coffee_catalog } from "../../../data.json";
 
 const adressFormSchema = z.object({
-    zip: z.string().max(8, {error: "Máximo 8 caracteres"}),
-    street: z.string().min(5, {error: "Mínimo 5 caracteres"}).max(40, {error: "Máximo 40 caracteres"}),
-    number: z.string().min(2, {error: "Mínimo 2 caracteres"}),
-    comple: z.string(),
-    neighborhood: z.string().min(3, {error: "Mínimo 3 caracteres"}),
-    city: z.string().min(4, {error: "Mínimo 4 caracteres"}),
-    state: z.string().min(2, {error: "Mínimo 2 caracteres"}),
-    pay_mode: z.enum(['credit', 'debit', 'cash'], {error: "Selecione um meio de pagamento"}),
+    zip: z.string()
+        .min(9, { message: "Mínimo 8 caracteres" })
+        .max(9, { message: "Máximo 8 caracteres" }),
+    street: z.string().min(5, { message: "Mínimo 5 caracteres" }).max(40, { message: "Máximo 40 caracteres" }),
+    number: z.string()
+        .min(1, { message: "Mínimo 1 caractere" })
+        .regex(/^[0-9]+$/, { message: "Somente números" }),
+    comple: z.string().optional(),
+    neighborhood: z.string().min(3, { message: "Mínimo 3 caracteres" }),
+    city: z.string().min(4, { message: "Mínimo 4 caracteres" }),
+    state: z.string().min(2, { message: "Mínimo 2 caracteres" }).max(2, { message: "Máximo 2 caracteres" }).toUpperCase(),
+    pay_mode: z.enum(['credit', 'debit', 'cash'], { error: "Selecione um meio de pagamento" }),
 });
 
 type AdressFormData = z.infer<typeof adressFormSchema>
 
 export function Checkout(){
-    const {order, getSelectedItems} = useContext(CartContext);
+    const {order, updateTotal, updateItemAmount, addDeliveryData} = useContext(CartContext);
     const newAdressForm = useForm<AdressFormData>({
         mode: "onChange",
         resolver: zodResolver(adressFormSchema),
         defaultValues:{}
     });
 
-    
-    const {handleSubmit, formState: {errors}} = newAdressForm;
+    function calculateItemAmount(itemPrice: string, itemQty: number): number {
+        // Garante que o itemPrice seja tratado como número antes de calcular
+        const price = parseFloat(itemPrice.replace(',', '.')) || 0;
+        return price * itemQty;
+    }
+
+
+    function calculateOrderAmount(itemsTotal: number, deliveryFee: number = 3.5): number {
+        return itemsTotal + deliveryFee;
+    }
+
+   // A lista de itens selecionados e os cálculos
+    const items = order?.items;
+    const currentTotal = parseFloat(order?.total ?? 0); // O total ATUAL no contexto
+    const deliveryFee = order?.delivery?.fee ?? 3.50; 
+
+    useEffect(() => {
+        // Só executa se houver itens
+        if (items && items.length > 0) {
+            let productsTotal = 0;
+            const itemsPriceList: CartItemType[] = [];
+
+            items.forEach((cartItem: CartItemType) => {
+                const foundCoffee = coffee_catalog.find((cc: Coffee) => cc.id === cartItem.id);
+                
+                if (foundCoffee && cartItem.quantity) {
+                    const totalItemPrice =  calculateItemAmount(foundCoffee.price, cartItem.quantity);
+                    productsTotal += totalItemPrice;
+                    itemsPriceList.push({ id: cartItem.id, itemAmount: totalItemPrice});
+                }
+            });
+
+            const totalOrderAmount = calculateOrderAmount(productsTotal);
+
+            // Só atualiza o contexto se o total calculado for DIFERENTE
+            // do total que já está salvo no contexto.
+            if (totalOrderAmount !== currentTotal) {
+                // console.log("Atualizando totais no contexto...");
+                updateItemAmount(itemsPriceList);
+                updateTotal({totalOrderAmount, productsTotal, deliveryFee});
+            }
+        }
+        
+    }, [items, deliveryFee, currentTotal, updateItemAmount, updateTotal]); 
+
+    const selectedItemsForDisplay = useMemo(() => {
+        if (!items) return [];
+
+        return items.map((cartItem: CartItemType) => {
+            const foundCoffee = coffee_catalog.find((cc: Coffee) => cc.id === cartItem.id);
+            if (!foundCoffee) return null;
+            return {
+                ...foundCoffee,
+                quantity: cartItem.quantity,
+                itemAmount: cartItem.itemAmount,
+            };
+        }).filter(item => item !== null);
+
+    }, [items]);
+
+    const {handleSubmit, formState: {errors}, reset} = newAdressForm;
     
     function teste(data: AdressFormData){
         console.log(data);
+        addDeliveryData(data);
+        reset();
     }
-    
+
     return (
         <form onSubmit={handleSubmit(teste)}>
             <CheckoutContainer>
@@ -73,14 +140,13 @@ export function Checkout(){
                             <TitleXS>Cafés selecionados</TitleXS>
                             <SelectedItemstContainer>
                                 {
-                                    order?.items.map(item => (<CartItem item={item}/>))
+                                    selectedItemsForDisplay?.map((item: Coffee) => <CartItem key={item.id} item={item}/>)
                                 }
-                                
                                 <TotalCart />
                                 <PrimaryButton type="submit">
                                     Confirmar pedido
                                 </PrimaryButton>
-                                <button type="button" onClick={() => getSelectedItems()}>testee</button>
+                                {/* <button type="button" onClick={() => console.log(order)}>testee</button> */}
                             </SelectedItemstContainer>
                         </PurchaseInfo>
                     </FormProvider>

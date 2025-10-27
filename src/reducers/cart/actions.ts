@@ -4,11 +4,14 @@ export enum ActionTypes{
     ADD_ITEM = "ADD_ITEM",
     INCREASE_ITEM = "INCREASE_ITEM",
     DECREASE_ITEM = "DECREASE_ITEM",
+    REMOVE_ITEM = "REMOVE_ITEM",
     CHANGE_ITEM_UNIT = "CHANGE_ITEM_UNIT",
     ADD_DELIVERY_DATA = "ADD_DELIVERY_DATA",
     ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE",
     PICKED_ITEM = "PICKED_ITEM",
-    GET_SELECTED_ITEMS = "GET_SELECTED_ITEMS"
+    GET_SELECTED_ITEMS = "GET_SELECTED_ITEMS",
+    UPDATE_TOTAL = "UPDATE_TOTAL",
+    UPDATE_ITEM_AMOUNT = "UPDATE_ITEM_AMOUNT"
 }
 
 export function addCartItemAction(newItem: CartItem){
@@ -29,18 +32,18 @@ export function increaseItemAction(id: CartItem["id"]){
     }
 }
 
-export function setAsPickedAction(id: CartItem["id"]){
+export function decreaseItemAction(id: CartItem["id"]){
     return {
-        type: ActionTypes.PICKED_ITEM,
+        type: ActionTypes.DECREASE_ITEM,
         payload: {
             id
         }
     }
 }
 
-export function deacreaseItemAction(id: CartItem["id"]){
+export function removeItemAction(id: CartItem["id"]){
     return {
-        type: ActionTypes.INCREASE_ITEM,
+        type: ActionTypes.REMOVE_ITEM,
         payload: {
             id
         }
@@ -74,11 +77,29 @@ export function addPaymentModeAction(paymentMode: Payment){
     }
 }
 
-export function getSelectedItemsAction(order: CartItemType[]){
+export function getSelectedItemsAction(){
     return{
         type: ActionTypes.GET_SELECTED_ITEMS,
+        payload: {}
+    }
+}
+
+export function updateTotalAction({totalOrderAmount, productsTotal, deliveryFee}: any){
+    return{
+        type: ActionTypes.UPDATE_TOTAL,
         payload: {
-            order
+            totalOrderAmount,
+            productsTotal,
+            deliveryFee
+        }
+    }
+}
+
+export function updateItemAmountAction(itemsPrice: any[]){
+    return{
+        type: ActionTypes.UPDATE_ITEM_AMOUNT,
+        payload: {
+            itemsPrice
         }
     }
 }

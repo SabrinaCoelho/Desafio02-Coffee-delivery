@@ -2,24 +2,41 @@ import { TrashIcon } from "@phosphor-icons/react";
 import { SecondaryButton } from "../../../../components/Button/style";
 import { InputNumber } from "../../../../components/InputNumber";
 import { CartItemButtons, CartItemContainer, CartItemImg, CartItemInfo, PriceCartItem, CartItemTitle } from "./styles";
-import expresso from "../../../../assets/coffee_types/expresso.png";
 import { Separator } from "../TotalCart/styles";
+import type { Coffee } from "../../../Home/components/Catalog/CatalogItem";
+import { useContext, useState } from "react";
+import { CartContext } from "../../../../contexts/CartContext";
+import { utils } from "../../../../utils";
 
-export function CartItem(item: any){
+interface CartItemProps{
+    item: Coffee;
+}
+
+export function CartItem({item}: CartItemProps){
+    console.log(item)
+    const { removeItem } = useContext(CartContext);
+    const [ itemQty, setItemQty ] = useState(0);
+    function handleOnChangeQty(newQty: number){
+        setItemQty(newQty);
+    }
+
+    function handleOnClick(){
+        removeItem(item.id);
+    }
     return(
         <>
             <CartItemContainer>
                 <CartItemInfo>
                     <CartItemImg>
-                        <img src={expresso} width={64}/>
+                        <img src={item.img} alt="" style={{width: "64px"}}/>
                     </CartItemImg>
                     <div>
                         <CartItemTitle>
-                            Expresso Tradicional
+                            {item.name}
                         </CartItemTitle>
                         <CartItemButtons>
-                            <InputNumber coffeId={1}/>
-                            <SecondaryButton>
+                            <InputNumber handleOnChangeQty={handleOnChangeQty} itemQty={item.quantity} itemId={item.id}/>
+                            <SecondaryButton onClick={() => handleOnClick()}>
                                 <TrashIcon size={16} />
                                 Remover
                             </SecondaryButton>
@@ -27,7 +44,7 @@ export function CartItem(item: any){
                     </div>
                 </CartItemInfo>
                 <PriceCartItem>
-                    R$9,90
+                    {utils.formatCurrency(item.itemAmount)}
                 </PriceCartItem>
             </CartItemContainer>
             <Separator />
