@@ -67,7 +67,8 @@ export function cartReducer(state: CartState, action: any){
             });
         case ActionTypes.ADD_DELIVERY_DATA:
             return produce(state, draft => {
-                draft.order.delivery = action.payload.orderTotalAmount
+                console.log(action.payload)
+                draft.order.delivery = action.payload;
             });
         case ActionTypes.ADD_PAYMENT_MODE:
             return produce(state, draft => {

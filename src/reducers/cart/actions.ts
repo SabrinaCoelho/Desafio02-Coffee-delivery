@@ -63,7 +63,7 @@ export function addDeliveryDataAction(deliveryData: Delivery){
     return{
         type: ActionTypes.ADD_DELIVERY_DATA,
         payload: {
-            deliveryData
+            ...deliveryData
         }
     }
 }

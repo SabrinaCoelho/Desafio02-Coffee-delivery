@@ -8,7 +8,8 @@ export const TitleXL = styled.h1`
 
 export const TitleL = styled.h1`
     ${mixins.title_l}
-    color: ${({theme}) => theme["base-title"]};
+    // color: ${({theme}) => theme["base-title"]};
+    color: ${(props) => props.color == undefined? props.theme["base-title"]: props.color};
 `;
 
 export const TitleXS = styled.h1`
