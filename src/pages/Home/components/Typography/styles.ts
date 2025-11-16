@@ -29,7 +29,8 @@ export const TextL_Bold = styled.p`
 
 export const TextM_Regular = styled.p`
     ${mixins.text_m_regular}
-    color: ${props => props.theme["base-subtitle"]};
+    //color: ${props => props.theme["base-subtitle"]};
+    color: ${(props) => props.color == undefined? props.theme["base-subtitle"]: props.color};
 `;
 export const TextS_Regular = styled.p`
     ${mixins.text_s}
