@@ -10,7 +10,7 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme} >
       <GlobalStyle/>
-      <BrowserRouter>
+      <BrowserRouter basename="/Desafio02-Coffee-delivery/">
       <CartContextProvider>
         <Router/>
       </CartContextProvider>
