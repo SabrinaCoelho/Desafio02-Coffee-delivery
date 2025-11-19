@@ -1,14 +1,17 @@
-import { CurrencyDollar, CurrencyDollarIcon, MapPinIcon, TimerIcon } from "@phosphor-icons/react";
+import { CurrencyDollarIcon, MapPinIcon, TimerIcon } from "@phosphor-icons/react";
 import { defaultTheme } from "../../styles/default";
 import { TextL_Regular, TextM_Regular, TitleL } from "../Home/components/Typography/styles";
 import { DeliveryRecapContainer, DeliveryRecapInfo, IconCircleBox, SuccessContainer, SuccessContent, SuccessImage, SuccessMessageTitle } from "./styles";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { CartContext } from "../../contexts/CartContext";
 import illustration from "../../assets/Illustration.png";
 
 export function Success(){
-    const {order} = useContext(CartContext);
-    console.log(order?.delivery?.street)
+    const {order, resetState} = useContext(CartContext);
+    const {current} = useRef(order);
+    resetState();
+    console.log(current)
+    
     return(
         <SuccessContainer>
             <SuccessMessageTitle>
@@ -26,10 +29,10 @@ export function Success(){
                         </div>
                         <div style={{display: "flex", flexDirection: "column"}}>
                             <TextM_Regular>
-                                Entrega em <strong>{order?.delivery?.street}, {order?.delivery?.number}</strong>
+                                Entrega em <strong>{current?.delivery?.street}, {current?.delivery?.number}</strong>
                             </TextM_Regular>
                             <TextM_Regular>
-                                {order?.delivery?.neighborhood}, {order?.delivery?.city}, {order?.delivery?.state}
+                                {current?.delivery?.neighborhood}, {current?.delivery?.city}, {current?.delivery?.state}
                             </TextM_Regular>
                         </div>
                     </DeliveryRecapInfo>
@@ -61,8 +64,8 @@ export function Success(){
                             <TextM_Regular>
                                 <strong>
                                     {
-                                        order?.payment?.mode === "credit" ? "Cartão de crédito"
-                                        : order?.payment?.mode === "debit" ? "Cartão de débito"
+                                        current?.payment?.mode === "credit" ? "Cartão de crédito"
+                                        : current?.payment?.mode === "debit" ? "Cartão de débito"
                                         : "Dinheiro"
                                     }
                                 </strong>
