@@ -15,7 +15,7 @@ export interface Cart{
 export interface CartState{
     order: Cart;
     itemsDetails: Coffee[];//antes era items
-    effective: boolean;
+    // effective: boolean;
 }
 
 export function cartReducer(state: CartState, action: any){
@@ -50,7 +50,6 @@ export function cartReducer(state: CartState, action: any){
             return produce(state, draft => {
                 draft.order.items = draft.order.items.filter(
                     item => {
-                        console.log(item.id !== action.payload.id)
                         return item.id !== action.payload.id
                     }
                 );
@@ -95,6 +94,12 @@ export function cartReducer(state: CartState, action: any){
                 );
                 
             })
+        case ActionTypes.RESET_STATE: 
+            return produce(
+                state, draft => {
+                    draft.order = action.payload.originalState.order
+                }
+            );
         default:
             return state;
     }

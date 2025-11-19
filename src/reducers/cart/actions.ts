@@ -1,4 +1,5 @@
 import type { CartItem, CartItemType, Delivery, Payment } from "../../contexts/CartContext";
+import type { Cart, CartState } from "./reducer";
 
 export enum ActionTypes{
     ADD_ITEM = "ADD_ITEM",
@@ -11,7 +12,8 @@ export enum ActionTypes{
     PICKED_ITEM = "PICKED_ITEM",
     GET_SELECTED_ITEMS = "GET_SELECTED_ITEMS",
     UPDATE_TOTAL = "UPDATE_TOTAL",
-    UPDATE_ITEM_AMOUNT = "UPDATE_ITEM_AMOUNT"
+    UPDATE_ITEM_AMOUNT = "UPDATE_ITEM_AMOUNT",
+    RESET_STATE = "RESET_STATE"
 }
 
 export function addCartItemAction(newItem: CartItem){
@@ -100,6 +102,15 @@ export function updateItemAmountAction(itemsPrice: any[]){
         type: ActionTypes.UPDATE_ITEM_AMOUNT,
         payload: {
             itemsPrice
+        }
+    }
+}
+
+export function resetStateAction(originalState: CartState){
+    return{
+        type: ActionTypes.RESET_STATE,
+        payload: {
+            originalState
         }
     }
 }
