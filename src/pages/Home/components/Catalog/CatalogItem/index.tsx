@@ -72,7 +72,7 @@ export function CatalogItem({item}: CatalogItemProps){
             </TagsContainer>
 
             <span>
-                <img src={"/Desafio02-Coffee-delivery"+item.img} alt="" style={{width: "120px"}}/>
+                <img src={item.img} alt="" style={{width: "120px"}}/>
             </span>
 
         </CatatalogItemContainer>
