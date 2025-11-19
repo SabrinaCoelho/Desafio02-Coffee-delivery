@@ -7,13 +7,13 @@ import type { Coffee } from "../../../Home/components/Catalog/CatalogItem";
 import { useContext, useState } from "react";
 import { CartContext } from "../../../../contexts/CartContext";
 import { utils } from "../../../../utils";
+import { defaultTheme } from "../../../../styles/default";
 
 interface CartItemProps{
     item: Coffee;
 }
 
 export function CartItem({item}: CartItemProps){
-    console.log(item)
     const { removeItem } = useContext(CartContext);
     const [ itemQty, setItemQty ] = useState(0);
     function handleOnChangeQty(newQty: number){
@@ -37,7 +37,7 @@ export function CartItem({item}: CartItemProps){
                         <CartItemButtons>
                             <InputNumber handleOnChangeQty={handleOnChangeQty} itemQty={item.quantity} itemId={item.id}/>
                             <SecondaryButton onClick={() => handleOnClick()}>
-                                <TrashIcon size={16} />
+                                <TrashIcon size={16} color={defaultTheme.purple}/>
                                 Remover
                             </SecondaryButton>
                         </CartItemButtons>
