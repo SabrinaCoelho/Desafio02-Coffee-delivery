@@ -28,7 +28,7 @@ export function CartItem({item}: CartItemProps){
             <CartItemContainer>
                 <CartItemInfo>
                     <CartItemImg>
-                        <img src={"/Desafio02-Coffee-delivery" + item.img} alt="" style={{width: "64px"}}/>
+                        <img src={"/Desafio02-Coffee-delivery/" + item.img} alt="" style={{width: "64px"}}/>
                     </CartItemImg>
                     <div>
                         <CartItemTitle>
