@@ -1,18 +1,15 @@
-import { useContext, useState, type ChangeEvent } from "react";
+import { useContext } from "react";
 import { IncreaseDecreaseButton, InputNumberContainer, InputNumberElement } from "./styles";
 import { CartContext, type CartItemType } from "../../contexts/CartContext";
 
 interface InputNumberProps{
-    // coffeId: number,
     itemId: number;
     itemQty: number;
     handleOnChangeQty: (event: any) => void;
-    /* handleOnClickIncrease: () => void;
-    handleOnClickDecrease: () => void; */
 }
 
 export function InputNumber({itemId, itemQty, handleOnChangeQty}: InputNumberProps){
-    const { order, decreaseItem, increaseItem } = useContext(CartContext);
+    const { order, decreaseItem, increaseItem, removeItem } = useContext(CartContext);
     
     function handleOnClickIncrease(){
         //check if already on cart
@@ -28,13 +25,17 @@ export function InputNumber({itemId, itemQty, handleOnChangeQty}: InputNumberPro
         //check if already on cart
         if(checkAlreadyOnCart()){
             decreaseItem(itemId);
+        }
+        if(itemQty - 1 === 0){
+            removeItem(itemId);
+            handleOnChangeQty(itemQty - 1);
         }else{
             handleOnChangeQty(itemQty - 1);
         }
     }
 
     function checkAlreadyOnCart(){
-        return order?.items.find((item: CartItemType) => item.id === itemId);
+        return order?.items ? order?.items.find((item: CartItemType) => item.id === itemId) : false;
     }
 
     return(
@@ -42,11 +43,11 @@ export function InputNumber({itemId, itemQty, handleOnChangeQty}: InputNumberPro
             <IncreaseDecreaseButton onClick={() => handleOnClickDecrease()}>
                 &minus;
             </IncreaseDecreaseButton>
-            <InputNumberElement 
+            <InputNumberElement
                 onChange={(event) => handleOnChangeQty(event)} 
                 type="number"
                 value={itemQty} 
-                min={1}
+                min={0}
                 size={2}
                 max={99}
             />
