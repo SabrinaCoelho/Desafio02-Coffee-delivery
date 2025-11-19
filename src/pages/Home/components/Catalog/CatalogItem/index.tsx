@@ -5,7 +5,6 @@ import { TextL_Bold, TextS_Regular, TextTag } from "../../Typography/styles";
 import { CatatalogItemContainer, ItemInfosContainer, ItemPrice, ItemPriceContainer, SelectItemContainer, Tag, TagsContainer } from "./styles";
 import { useContext, useState } from "react";
 import { CartContext, type CartItemType } from "../../../../../contexts/CartContext";
-import { utils } from "../../../../../utils";
 
 export interface Coffee extends CartItemType{
     tags: string[] | undefined;
@@ -25,7 +24,7 @@ export function CatalogItem({item}: CatalogItemProps){
     
     const {addItem} = useContext(CartContext);
     
-    function handleOnClick(event: any){
+    function handleOnClick(){
         addItem({
             id: item.id,
             quantity: itemQty
@@ -47,7 +46,7 @@ export function CatalogItem({item}: CatalogItemProps){
                 </ItemPriceContainer>
                 <div style={{display: "flex", gap: ".5rem"}}>
                     <InputNumber itemId={item.id} itemQty={itemQty} handleOnChangeQty={handleOnChange}/>
-                    <IconButton onClick={(event) => handleOnClick(event)}>
+                    <IconButton onClick={() => handleOnClick()}>
                         <ShoppingCartIcon size={22} weight="fill" />
                     </IconButton>
                 </div>
@@ -73,7 +72,7 @@ export function CatalogItem({item}: CatalogItemProps){
             </TagsContainer>
 
             <span>
-                <img src={item.img} alt="" style={{width: "120px"}}/>
+                <img src={"/Desafio02-Coffee-delivery"+item.img} alt="" style={{width: "120px"}}/>
             </span>
 
         </CatatalogItemContainer>

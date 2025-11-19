@@ -15,7 +15,7 @@ interface CartItemProps{
 
 export function CartItem({item}: CartItemProps){
     const { removeItem } = useContext(CartContext);
-    const [ itemQty, setItemQty ] = useState(0);
+    const [ , setItemQty ] = useState(0);
     function handleOnChangeQty(newQty: number){
         setItemQty(newQty);
     }
@@ -28,14 +28,14 @@ export function CartItem({item}: CartItemProps){
             <CartItemContainer>
                 <CartItemInfo>
                     <CartItemImg>
-                        <img src={item.img} alt="" style={{width: "64px"}}/>
+                        <img src={"/Desafio02-Coffee-delivery" + item.img} alt="" style={{width: "64px"}}/>
                     </CartItemImg>
                     <div>
                         <CartItemTitle>
                             {item.name}
                         </CartItemTitle>
                         <CartItemButtons>
-                            <InputNumber handleOnChangeQty={handleOnChangeQty} itemQty={item.quantity} itemId={item.id}/>
+                            <InputNumber handleOnChangeQty={handleOnChangeQty} itemQty={item.quantity ?? 0} itemId={item.id}/>
                             <SecondaryButton onClick={() => handleOnClick()}>
                                 <TrashIcon size={16} color={defaultTheme.purple}/>
                                 Remover

@@ -54,7 +54,8 @@ export function Checkout(){
 
    // A lista de itens selecionados e os cálculos
     const items = order?.items;
-    const currentTotal = parseFloat(order?.total ?? 0); // O total ATUAL no contexto
+    // const currentTotal = parseFloat(order?.total ?? 0); // O total ATUAL no contexto
+    const currentTotal = order?.totalOrderAmount; // O total ATUAL no contexto
     const deliveryFee = order?.delivery?.fee ?? 3.50; 
 
     useEffect(() => {

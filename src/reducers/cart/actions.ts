@@ -1,22 +1,21 @@
-import type { CartItem, CartItemType, Delivery, Payment } from "../../contexts/CartContext";
-import type { Cart, CartState } from "./reducer";
+import type { CartItemType, Delivery, Payment } from "../../contexts/CartContext";
+import type { CartState } from "./reducer";
 
-export enum ActionTypes{
-    ADD_ITEM = "ADD_ITEM",
-    INCREASE_ITEM = "INCREASE_ITEM",
-    DECREASE_ITEM = "DECREASE_ITEM",
-    REMOVE_ITEM = "REMOVE_ITEM",
-    CHANGE_ITEM_UNIT = "CHANGE_ITEM_UNIT",
-    ADD_DELIVERY_DATA = "ADD_DELIVERY_DATA",
-    ADD_PAYMENT_MODE = "ADD_PAYMENT_MODE",
-    PICKED_ITEM = "PICKED_ITEM",
-    GET_SELECTED_ITEMS = "GET_SELECTED_ITEMS",
-    UPDATE_TOTAL = "UPDATE_TOTAL",
-    UPDATE_ITEM_AMOUNT = "UPDATE_ITEM_AMOUNT",
-    RESET_STATE = "RESET_STATE"
+export const ActionTypes = {
+    ADD_ITEM: "ADD_ITEM",
+    INCREASE_ITEM: "INCREASE_ITEM",
+    DECREASE_ITEM: "DECREASE_ITEM",
+    REMOVE_ITEM: "REMOVE_ITEM",
+    ADD_DELIVERY_DATA: "ADD_DELIVERY_DATA",
+    ADD_PAYMENT_MODE: "ADD_PAYMENT_MODE",
+    PICKED_ITEM: "PICKED_ITEM",
+    GET_SELECTED_ITEMS: "GET_SELECTED_ITEMS",
+    UPDATE_TOTAL: "UPDATE_TOTAL",
+    UPDATE_ITEM_AMOUNT: "UPDATE_ITEM_AMOUNT",
+    RESET_STATE: "RESET_STATE"
 }
 
-export function addCartItemAction(newItem: CartItem){
+export function addCartItemAction(newItem: CartItemType){
     return{
         type: ActionTypes.ADD_ITEM,
         payload: {
@@ -25,7 +24,7 @@ export function addCartItemAction(newItem: CartItem){
     }
 }
 
-export function increaseItemAction(id: CartItem["id"]){
+export function increaseItemAction(id: CartItemType["id"]){
     return {
         type: ActionTypes.INCREASE_ITEM,
         payload: {
@@ -34,7 +33,7 @@ export function increaseItemAction(id: CartItem["id"]){
     }
 }
 
-export function decreaseItemAction(id: CartItem["id"]){
+export function decreaseItemAction(id: CartItemType["id"]){
     return {
         type: ActionTypes.DECREASE_ITEM,
         payload: {
@@ -43,20 +42,11 @@ export function decreaseItemAction(id: CartItem["id"]){
     }
 }
 
-export function removeItemAction(id: CartItem["id"]){
+export function removeItemAction(id: CartItemType["id"]){
     return {
         type: ActionTypes.REMOVE_ITEM,
         payload: {
             id
-        }
-    }
-}
-
-export function updateItemUnitAction(item: CartItem){
-    return{
-        type: ActionTypes.CHANGE_ITEM_UNIT,
-        payload: {
-            item
         }
     }
 }

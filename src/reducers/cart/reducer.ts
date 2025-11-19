@@ -33,7 +33,7 @@ export function cartReducer(state: CartState, action: any){
                 const itemToIncrease = draft.order.items.find(
                     item => item.id === action.payload.id
                 );
-                if(itemToIncrease && itemToIncrease.quantity){//check
+                if(itemToIncrease && itemToIncrease.quantity){
                     itemToIncrease.quantity += 1;
                 }
             });
@@ -42,7 +42,7 @@ export function cartReducer(state: CartState, action: any){
                 const itemToDecrease = draft.order.items.find(
                     item => item.id === action.payload.id
                 );
-                if(itemToDecrease && itemToDecrease.quantity){//check
+                if(itemToDecrease && itemToDecrease.quantity){
                     itemToDecrease.quantity -= 1;
                 }
             });
@@ -53,16 +53,6 @@ export function cartReducer(state: CartState, action: any){
                         return item.id !== action.payload.id
                     }
                 );
-            });
-        case ActionTypes.CHANGE_ITEM_UNIT:
-            return produce(state, draft => {
-                const itemToUpdateQuantity = draft.selectedItems.find(//TODO CHECK OUT
-                    item => item.id === action.payload.item.id
-                );
-                console.log("update ->"+action.payload.item);
-                if(itemToUpdateQuantity && itemToUpdateQuantity.quantity){//check
-                    itemToUpdateQuantity.quantity = action.payload.item.quantity;
-                }
             });
         case ActionTypes.ADD_DELIVERY_DATA:
             return produce(state, draft => {

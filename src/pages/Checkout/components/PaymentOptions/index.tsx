@@ -3,7 +3,7 @@ import { Mode, PaymentOptionsContainer } from "./styles";
 import { BankIcon, CreditCardIcon, MoneyIcon } from "@phosphor-icons/react";
 
 export function PaymentOptions(){
-    const { register, formState: { errors } } = useFormContext();
+    const { register } = useFormContext();
     return(
         <PaymentOptionsContainer>
             <Mode>
