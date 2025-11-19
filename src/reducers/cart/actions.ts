@@ -6,6 +6,7 @@ export const ActionTypes = {
     INCREASE_ITEM: "INCREASE_ITEM",
     DECREASE_ITEM: "DECREASE_ITEM",
     REMOVE_ITEM: "REMOVE_ITEM",
+    CHANGE_ITEM_UNIT: "CHANGE_ITEM_UNIT",
     ADD_DELIVERY_DATA: "ADD_DELIVERY_DATA",
     ADD_PAYMENT_MODE: "ADD_PAYMENT_MODE",
     PICKED_ITEM: "PICKED_ITEM",
@@ -47,6 +48,15 @@ export function removeItemAction(id: CartItemType["id"]){
         type: ActionTypes.REMOVE_ITEM,
         payload: {
             id
+        }
+    }
+}
+
+export function updateItemUnitAction(item: CartItemType){
+    return{
+        type: ActionTypes.CHANGE_ITEM_UNIT,
+        payload: {
+            item
         }
     }
 }

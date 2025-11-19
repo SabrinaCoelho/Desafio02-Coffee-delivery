@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import { cartReducer, type Cart, type CartState } from "../reducers/cart/reducer";
-import { addCartItemAction, increaseItemAction, decreaseItemAction, removeItemAction, updateTotalAction, updateItemAmountAction, addDeliveryDataAction, resetStateAction } from "../reducers/cart/actions";
+import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction, updateTotalAction, updateItemAmountAction, addDeliveryDataAction, resetStateAction } from "../reducers/cart/actions";
 
 export interface CartItemType{
     id: number;
