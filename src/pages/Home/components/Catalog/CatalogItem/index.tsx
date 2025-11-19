@@ -5,6 +5,7 @@ import { TextL_Bold, TextS_Regular, TextTag } from "../../Typography/styles";
 import { CatatalogItemContainer, ItemInfosContainer, ItemPrice, ItemPriceContainer, SelectItemContainer, Tag, TagsContainer } from "./styles";
 import { useContext, useState } from "react";
 import { CartContext, type CartItemType } from "../../../../../contexts/CartContext";
+import { utils } from "../../../../../utils";
 
 export interface Coffee extends CartItemType{
     tags: string[] | undefined;
@@ -20,9 +21,8 @@ type CatalogItemProps = {
 }
 
 export function CatalogItem({item}: CatalogItemProps){
-    //const {setAsPicked} = useContext(CartContext);
-    const [itemQty, setItemQty] = useState(0);
-
+    const [itemQty, setItemQty] = useState(item.quantity ?? 0);
+    
     const {addItem} = useContext(CartContext);
     
     function handleOnClick(event: any){
@@ -43,7 +43,7 @@ export function CatalogItem({item}: CatalogItemProps){
             <SelectItemContainer>
                 <ItemPriceContainer>
                     R$
-                    <ItemPrice>{item.price}</ItemPrice>
+                    <ItemPrice> {item.price.replace(".", ",")}</ItemPrice>
                 </ItemPriceContainer>
                 <div style={{display: "flex", gap: ".5rem"}}>
                     <InputNumber itemId={item.id} itemQty={itemQty} handleOnChangeQty={handleOnChange}/>
@@ -64,11 +64,11 @@ export function CatalogItem({item}: CatalogItemProps){
             
             <TagsContainer>
                 {
-                    item.tags.map((tag: string, id: number) => (
+                    item && item.tags ? item.tags.map((tag: string, id: number) => (
                         <Tag key={id}>
                             <TextTag>{tag}</TextTag>
                         </Tag>
-                    ))
+                    )) : null
                 }
             </TagsContainer>
 
