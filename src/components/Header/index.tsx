@@ -7,9 +7,11 @@ import { Link } from "react-router";
 export function Header (){
     return(
         <HeaderContainer>
-            <span>
-                <img src={logo} alt="Coffee Delivery logo"/>
-            </span>
+            <Link to="/">
+                <span>
+                    <img src={logo} alt="Coffee Delivery logo"/>
+                </span>
+            </Link>
             <div>
                 <CityLocation>
                     <MapPinIcon size={22} weight="fill" />
