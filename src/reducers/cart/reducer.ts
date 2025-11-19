@@ -75,7 +75,7 @@ export function cartReducer(state: CartState, action: any){
                 
                 draft.order.items.forEach(item => {
                     const itemToUpdateAmount = action.payload.itemsPrice.find(
-                        selectedItem => item.id === selectedItem.id
+                        (selectedItem: CartItemType) => item.id === selectedItem.id
                     )
                     if(itemToUpdateAmount){
                         item.itemAmount = itemToUpdateAmount.itemAmount;
