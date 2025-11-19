@@ -12,10 +12,19 @@ export function Catalog(){
             <TitleL>
                 Nossos cafés
             </TitleL>
-            <button onClick={() => console.log(order)}>teste</button>
+            {/* <button onClick={() => console.log(order)}>teste</button> */}
             <CatalogOptionsContainer>
                 {
-                    coffee_catalog.map((coffee: Coffee) => (<CatalogItem key={coffee.id} item={coffee}/>))
+                    coffee_catalog.map((coffee: Coffee) => {
+                        if(order?.items){
+                            const alreadyInCart = order?.items.find(item => item.id === coffee.id)
+                            if(alreadyInCart){
+                                return <CatalogItem key={coffee.id} item={{...coffee, quantity: alreadyInCart.quantity}}/>
+                            }
+                        }
+                        return <CatalogItem key={coffee.id} item={coffee}/>
+                    }
+                    )
                 }
             </CatalogOptionsContainer>
         </CatalogContainer>
