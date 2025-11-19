@@ -5,6 +5,8 @@ export const CheckoutContainer = styled.div`
     display: flex;
     gap: 2rem;
     margin-bottom: 15rem;
+    flex-wrap: wrap;
+    justify-content: center;
 `;
 
 export const ShippmentContainer = styled.div`
