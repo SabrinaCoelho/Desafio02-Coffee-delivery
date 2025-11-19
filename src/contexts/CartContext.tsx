@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
-import { cartReducer, type Cart } from "../reducers/cart/reducer";
-import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction, updateTotalAction, updateItemAmountAction, addDeliveryDataAction } from "../reducers/cart/actions";
+import { cartReducer, type Cart, type CartState } from "../reducers/cart/reducer";
+import { addCartItemAction, updateItemUnitAction, increaseItemAction, decreaseItemAction, removeItemAction, updateTotalAction, updateItemAmountAction, addDeliveryDataAction, resetStateAction } from "../reducers/cart/actions";
 
 export interface CartItemType{
     id: number;
@@ -29,7 +29,6 @@ export interface Payment{//add enum?
 
 interface CartContextType{
     order: Cart | null;
-    effective: boolean;
     addItem: (data: CartItemType) => void;
     increaseItem: (itemId: number) => void;
     decreaseItem: (itemId: number) => void;
@@ -37,6 +36,7 @@ interface CartContextType{
     updateItemAmount: (itemsPrice: CartItemType[]) => void;
     updateTotal: (totalS: any) => void;
     addDeliveryData: (data: Delivery) => void;
+    resetState: () => void;
 }
 
 export const CartContext = createContext({} as CartContextType);
@@ -46,14 +46,16 @@ interface CartContextProviderProps{
 }
 
 export function CartContextProvider({children}: CartContextProviderProps){
+    const initialContextState: CartState = {
+        order: {
+            items: []
+        },
+        itemsDetails: []
+    };
+
     const [cartState, dispatch] = useReducer(
         cartReducer,
-        {
-            order: {
-                items: []
-            },
-            itemsDetails: []
-        },
+        initialContextState,
         (initialArgs) => {
             const storedStateAsJSON = localStorage.getItem("@ignite-coffee-delivery:cart-state-1.0.0")
             if(storedStateAsJSON){
@@ -68,25 +70,28 @@ export function CartContextProvider({children}: CartContextProviderProps){
         localStorage.setItem("@ignite-coffee-delivery:cart-state-1.0.0", stateJSON)
     }, [cartState])
 
-    const {order, effective} = cartState;
+    const {order} = cartState;
+
+    function resetState (){
+        dispatch(resetStateAction(initialContextState))
+    }
 
     function addItem(itemUnit: CartItemType){
         //does the item already exists in the bascket?
-        console.log(itemUnit)
-        if(order && order.items){
-            const itemExists = order.items.find(item => {
-                return item.id === itemUnit.id
-            });
-            //yes?
-            if(itemExists){//melhorar
-                //update to the new quantity
-                dispatch(updateItemUnitAction(itemUnit));
-            }
-            else{
-                //no? Add to the bascket
-                dispatch(addCartItemAction(itemUnit));
-            }
+        
+        const itemExists = order.items ? order.items.find(item => {
+            return item.id === itemUnit.id
+        }) : 0;
+        //yes?
+        if(itemExists){//melhorar
+            //update to the new quantity
+            dispatch(updateItemUnitAction(itemUnit));
         }
+        else{
+            //no? Add to the bascket
+            dispatch(addCartItemAction(itemUnit));
+        }
+        
     }
 
     function increaseItem(itemId: number){
@@ -119,14 +124,14 @@ export function CartContextProvider({children}: CartContextProviderProps){
         <CartContext.Provider value={
             {   
                 order,
-                effective,
                 addItem,
                 increaseItem,
                 decreaseItem,
                 removeItem,
                 updateItemAmount,
                 updateTotal,
-                addDeliveryData
+                addDeliveryData,
+                resetState
             }} >
                 {children}
         </CartContext.Provider>
