@@ -13,6 +13,7 @@ import { useContext, useEffect, useMemo } from "react";
 import { CartContext, type CartItemType } from "../../contexts/CartContext";
 import type { Coffee } from "../Home/components/Catalog/CatalogItem";
 import { coffee_catalog } from "../../../data.json";
+import { useNavigate } from "react-router";
 
 const adressFormSchema = z.object({
     zip: z.string()
@@ -33,6 +34,7 @@ type AdressFormData = z.infer<typeof adressFormSchema>
 
 export function Checkout(){
     const {order, updateTotal, updateItemAmount, addDeliveryData} = useContext(CartContext);
+    const navigate = useNavigate();
     const newAdressForm = useForm<AdressFormData>({
         mode: "onChange",
         resolver: zodResolver(adressFormSchema),
@@ -101,43 +103,45 @@ export function Checkout(){
 
     const {handleSubmit, formState: {errors}, reset} = newAdressForm;
     
-    function teste(data: AdressFormData){
+    function subForm(data: AdressFormData){
         console.log(data);
         addDeliveryData(data);
         reset();
+        navigate("/success");
     }
 
     return (
-        <form onSubmit={handleSubmit(teste)}>
-            <CheckoutContainer>
-                
-                    <FormProvider {...newAdressForm}>
-                        <ShippmentContainer>
-                            <TitleXS>Complete seu pedido</TitleXS>
-                            <AdressContainer >
-                                <AdressLabel>
-                                    <MapPinAreaIcon size={22} />
-                                    <div>
-                                        <TextM_Regular>Endereço de Entrega</TextM_Regular>
-                                        <TextS_Regular>Informe o endereço onde deseja receber seu pedido</TextS_Regular>
-                                    </div>
-                                </AdressLabel>
-                                <AdressForm />
-                            </AdressContainer>
-                            <PaymentContainer>
-                                <PaymentLabel>
-                                    <CurrencyDollarIcon size={22} />
-                                    <div>
-                                        <TextM_Regular>Pagamento</TextM_Regular>
-                                        <TextS_Regular>O pagamento é feito na entrega. Escolha a forma que deseja pagar</TextS_Regular>
-                                    </div>
-                                </PaymentLabel>
-                                <PaymentOptions />
-                                {errors.pay_mode && <pre>{errors.pay_mode?.message}</pre>}
-                            </PaymentContainer>
-                        </ShippmentContainer>
-                        <PurchaseInfo>
-                            <TitleXS>Cafés selecionados</TitleXS>
+        <form onSubmit={handleSubmit(subForm)}>
+            <FormProvider {...newAdressForm}>
+                <CheckoutContainer>
+                    <ShippmentContainer>
+                        <TitleXS>Complete seu pedido</TitleXS>
+                        <AdressContainer >
+                            <AdressLabel>
+                                <MapPinAreaIcon size={22} />
+                                <div>
+                                    <TextM_Regular>Endereço de Entrega</TextM_Regular>
+                                    <TextS_Regular>Informe o endereço onde deseja receber seu pedido</TextS_Regular>
+                                </div>
+                            </AdressLabel>
+                            <AdressForm />
+                        </AdressContainer>
+                        <PaymentContainer>
+                            <PaymentLabel>
+                                <CurrencyDollarIcon size={22} />
+                                <div>
+                                    <TextM_Regular>Pagamento</TextM_Regular>
+                                    <TextS_Regular>O pagamento é feito na entrega. Escolha a forma que deseja pagar</TextS_Regular>
+                                </div>
+                            </PaymentLabel>
+                            <PaymentOptions />
+                            {errors.pay_mode && <pre>{errors.pay_mode?.message}</pre>}
+                        </PaymentContainer>
+                    </ShippmentContainer>
+                    <PurchaseInfo>
+                        <TitleXS>Cafés selecionados</TitleXS>
+                        {
+                            selectedItemsForDisplay.length ? 
                             <SelectedItemstContainer>
                                 {
                                     selectedItemsForDisplay?.map((item: Coffee) => <CartItem key={item.id} item={item}/>)
@@ -146,11 +150,17 @@ export function Checkout(){
                                 <PrimaryButton type="submit">
                                     Confirmar pedido
                                 </PrimaryButton>
-                                {/* <button type="button" onClick={() => console.log(order)}>testee</button> */}
+                                <button type="button" onClick={() => console.log(order)}>testee</button>
+                            </SelectedItemstContainer>:
+                            <SelectedItemstContainer>
+                                <TextM_Regular>
+                                    Carrinho vazio!
+                                </TextM_Regular>
                             </SelectedItemstContainer>
-                        </PurchaseInfo>
-                    </FormProvider>
-            </CheckoutContainer>
+                        }
+                    </PurchaseInfo>
+                </CheckoutContainer>
+            </FormProvider>
         </form>
     );
 }
