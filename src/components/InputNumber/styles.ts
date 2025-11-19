@@ -33,4 +33,5 @@ export const IncreaseDecreaseButton = styled.button`
     color: ${props => props.theme["purple"]};
     border: none;
     background: transparent;
+    cursor: pointer;
 `;
