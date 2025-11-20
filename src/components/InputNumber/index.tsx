@@ -21,7 +21,6 @@ export function InputNumber({itemId, itemQty, handleOnChangeQty}: InputNumberPro
     }
 
     function handleOnClickDecrease(){
-        console.log("DECREASE ITEM")
         //check if already on cart
         if(checkAlreadyOnCart()){
             decreaseItem(itemId);

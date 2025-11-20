@@ -108,7 +108,6 @@ export function CartContextProvider({children}: CartContextProviderProps){
 
     function updateItemAmount(itemsPrice: any[]){
         // dispatch(updateItemAmountAction(itemId, amount))
-        console.log(itemsPrice)
         dispatch(updateItemAmountAction(itemsPrice))
     }
     function updateTotal(totalS: any){

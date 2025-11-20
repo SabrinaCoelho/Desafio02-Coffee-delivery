@@ -105,7 +105,6 @@ export function Checkout(){
     const {handleSubmit, formState: {errors}, reset} = newAdressForm;
     
     function subForm(data: AdressFormData){
-        console.log(data);
         addDeliveryData(data);
         reset();
         navigate("/success");
@@ -151,7 +150,6 @@ export function Checkout(){
                                 <PrimaryButton type="submit">
                                     Confirmar pedido
                                 </PrimaryButton>
-                                <button type="button" onClick={() => console.log(order)}>testee</button>
                             </SelectedItemstContainer>:
                             <SelectedItemstContainer>
                                 <TextM_Regular>

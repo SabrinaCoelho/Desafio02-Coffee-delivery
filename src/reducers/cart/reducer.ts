@@ -19,12 +19,9 @@ export interface CartState{
 }
 
 export function cartReducer(state: CartState, action: any){
-    /* console.log(state);
-    console.log(action); */
 
     switch(action.type){
         case ActionTypes.ADD_ITEM:
-            console.log("ON ADD ITEM")
             return produce(state, draft => {
                 draft.order.items.push(action.payload.newItem);
             });
@@ -66,7 +63,6 @@ export function cartReducer(state: CartState, action: any){
             });
         case ActionTypes.ADD_DELIVERY_DATA:
             return produce(state, draft => {
-                console.log(action.payload)
                 draft.order.delivery = action.payload;
             });
         case ActionTypes.ADD_PAYMENT_MODE:
